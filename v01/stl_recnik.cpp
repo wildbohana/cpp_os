@@ -13,29 +13,29 @@ using namespace std;
 
 int main() {
 	// Mapa - kljuc je engleska rec, a vrednost srpska
-    map<string, string> recnik;
+	map<string, string> recnik;
 
 	// Kljuc stoji u [], a vrednost posle =
-    recnik["red"] = "crveno";
-    recnik["green"] = "zeleno";
-    recnik["blue"] = "plavo";
+	recnik["red"] = "crveno";
+	recnik["green"] = "zeleno";
+	recnik["blue"] = "plavo";
 
-    // Ucitavanje i prevod reci
+	// Ucitavanje i prevod reci
 	string rec;
-    while (cin >> rec) {
-        map<string,string>::const_iterator it = recnik.find(rec);
+	while (cin >> rec) {
+        	map<string,string>::const_iterator it = recnik.find(rec);
 
-        if (it == recnik.end()) {
-            cout << "Trazena rec ne postoji u recniku." << endl;
-        }
-        else {
-            // it->second - first je kljuc, second je vrednost
-            // zbog it koji već pokazuje na tu rec u recniku, mozemo ga iskoristiti da procitamo vrednot
-            cout << "Prevod: " << it->second << endl;
-        }
-    }
+        	if (it == recnik.end()) {
+        		cout << "Trazena rec ne postoji u recniku." << endl;
+        	}
+        	else {
+        	// it->second - first je kljuc, second je vrednost
+        	// zbog it koji već pokazuje na tu rec u recniku, mozemo ga iskoristiti da procitamo vrednot
+        	cout << "Prevod: " << it->second << endl;
+        	}
+	}
 
-    // while (cin >> rec) je true sve dok se ne unese Ctrl+D
+	// while (cin >> rec) je true sve dok se ne unese Ctrl+D
 
-    return 0;
+	return 0;
 }
