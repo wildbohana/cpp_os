@@ -15,13 +15,13 @@ int main()
 	vector<int> brojevi(5);	
 
 	// Unos brojeva
-    cout << "Unesite brojeve: " << endl;
-    for (int i = 0; i < brojevi.size(); i++) {
-        cin >> brojevi[i];
-    }
+	cout << "Unesite brojeve: " << endl;
+	for (int i = 0; i < brojevi.size(); i++) {
+		cin >> brojevi[i];
+	}
 
 	// Pronalazenje maksimalnog elementa
-    cout << "Najveći element je: " << *max_element(brojevi.cbegin(), brojevi.cend()) << endl;
+	cout << "Najveći element je: " << *max_element(brojevi.cbegin(), brojevi.cend()) << endl;
 	
-    return 0;
+	return 0;
 }
