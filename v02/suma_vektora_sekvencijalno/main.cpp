@@ -1,13 +1,14 @@
 /*
-Napraviti sekvencijalni program koji izračunava sumu svih elemenata vektora, koristeći funkciju f():
+Napraviti sekvencijalni program koji izracunava sumu svih elemenata vektora, koristeci funkciju f():
 
 typedef vector<double>::const_iterator ci;
 void f(ci pocetak, ci kraj, double& zbir)
 
-Funkcija f nalazi se u fajlu suma_vektora.h.
+Funkcija f nalazi se u fajlu suma_vektora.cpp.
 
-Pri tome, "ci" je definicija tipa koja služi tome da se kraće zapisuje tip vector<double>::const_iterator.
-Funkcija nema povratnu vrednost jer se rezultat prosleđuje kroz parametar "zbir".
+Pri tome, "ci" je definicija tipa koja sluzi tome da se krace zapisuje tip
+vector<double>::const_iterator.
+Funkcija nema povratnu vrednost jer se rezultat prosledjuje kroz parametar "zbir".
 */
 
 #include <iostream>
@@ -25,6 +26,6 @@ void testirajSumu() {
 
 int main() {
     testirajSumu();
-
+	
     return 0;
 }
