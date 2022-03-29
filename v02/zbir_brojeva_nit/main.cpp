@@ -1,6 +1,6 @@
 /*
-Napraviti program koji kreira jednu nit kojoj se prosleđuju dva cela broja a i b. 
-U okviru niti sabrati brojeve i ispisati na ekran njihov zbir.
+Napraviti program koji kreira jednu nit kojoj se prosledjuju dva cela broja a i b. 
+U okviru niti sabrati brojeve i ispisati njihov zbir.
 */
 
 #include <iostream>
@@ -8,13 +8,14 @@ U okviru niti sabrati brojeve i ispisati na ekran njihov zbir.
 
 using namespace std;
 
-void f(int a, int b) {
-    cout << a + b << endl;
+// Funkcija koja ispisuje zbir 2 broja
+void f(const int a, const int b) {
+    cout << a << "+" << b << "=" << a + b << endl;
 }
 
 int main()
 {
-    // iz niti ne možemo dobiti povratnu vrednost
+    // Iz niti ne možemo dobiti povratnu vrednost
     thread(f, 3, 5).join();
 
     return 0;
