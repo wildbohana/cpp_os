@@ -1,9 +1,9 @@
 /* 
 Napraviti funkciju:
-	
+
 vector<int> min(const vector<int>& a, const vector<int>& b);
 
-Ova funkcija vraća vektor koji sadrži minimume korespodentnih elemenata vektora a i b.
+Ova funkcija vraca vektor koji sadrzi minimume korespodentnih elemenata vetora a i b.
 Npr: r[0]=min(a[0],b[0]), r[1]=...
 
 Podrazumeva se: a.size()==b.size()
@@ -11,34 +11,44 @@ Podrazumeva se: a.size()==b.size()
 
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
-vector<int> min(const vector<int> &a, const vector<int> &b) {
+// Funkcija koja vraca vektor koji sadrzi minimume korespodentnih elemenata
+vector<int> min(const vector<int> &a, const vector<int> &b)
+{
+    vector<int> c(a.size());
 
-    vector<int> temp;
+    auto it_a = a.cbegin(), it_b = b.cbegin();
+    auto it_c = c.begin();
 
-    for(int i = 0; i < a.size(); i++) {
-        temp.push_back(min(a[i], b[i]));
+    while (it_a != a.cend()) {
+        *it_c++ = std::min(*it_a++, *it_b++);
 	}
 
-    return temp;
+    return c;
 }
 
-int main() {
+int main()
+{
+    	vector<int> a = {1, 2, 3, 4, 5};
+    	vector<int> b = {4, 3, 7, 3, 2};
 
-    int niz1[] = {2, 3, 4, 5, 6, 7};
-    int niz2[] = {11, 33, 2, 6, 7, 8};
+    	vector<int> c = min(a, b);
 
-    vector<int> a(niz1, niz1 + sizeof(niz1) / sizeof(int));
-    vector<int> b(niz2, niz2 + sizeof(niz2) / sizeof(int));
+	// Ispis rezultata
+    	cout << "\nRezultat:";
+    	for (int i = 0; i < n; i++) {
+        	cout << c[i] << " ";
+    	}
+    	cout << endl;
 
-    vector<int> c = min(a,b);
+	/*
+	cout << "Ispis rezultata - drugi nacin: " << endl;
+    	for (int x : c) {
+		cout << x << endl;
+	}
+	*/
 
-	// Ispis
-    for(auto it : c)
-        cout << it << endl;
-
-    return 0;
+    	return 0;
 }
