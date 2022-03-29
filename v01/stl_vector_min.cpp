@@ -31,24 +31,24 @@ vector<int> min(const vector<int> &a, const vector<int> &b)
 
 int main()
 {
-    	vector<int> a = {1, 2, 3, 4, 5};
-    	vector<int> b = {4, 3, 7, 3, 2};
+    vector<int> a = {1, 2, 3, 4, 5};
+    vector<int> b = {4, 3, 7, 3, 2};
 
-    	vector<int> c = min(a, b);
+    vector<int> c = min(a, b);
 
 	// Ispis rezultata
-    	cout << "\nRezultat:";
-    	for (int i = 0; i < n; i++) {
-        	cout << c[i] << " ";
-    	}
-    	cout << endl;
+    cout << "\nRezultat:";
+    for (int i = 0; i < n; i++) {
+        cout << c[i] << " ";
+    }
+    cout << endl;
 
 	/*
 	cout << "Ispis rezultata - drugi nacin: " << endl;
-    	for (int x : c) {
+    for (int x : c) {
 		cout << x << endl;
 	}
 	*/
 
-    	return 0;
+    return 0;
 }
