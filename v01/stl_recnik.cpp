@@ -1,36 +1,41 @@
 /*
-Napraviti jednostavan program za prevođenje reči sa engleskog na srpski jezik.
-Nakon unosa reči sa standardnog ulaza, ispisuje se prevod (ukoliko unesena reč postoji u rečniku). 
+Napraviti jednostavan program za prevodjenje reci sa engleskog na srpski jezik.
+Nakon unosa reci sa standardnog ulaza, ispisuje se prevod (ukoliko unesena rec postoji u recniku). 
 
-Uneti 3 engleske reči i njihove prevode na srpski.
+Uneti 3 engleske reci i njihove prevode na srpski.
 */
 
 #include <iostream>
-#include <map>
 #include <string>
+#include <map>
 
 using namespace std;
 
 int main() {
-	
-	map<string,string> recnik;
+	// Mapa - kljuc je engleska rec, a vrednost srpska
+    map<string, string> recnik;
 
-    recnik["white"] = "belo";
-    recnik["black"] = "crno";
-    recnik["gold"] = "zlatno";
+	// Kljuc stoji u [], a vrednost posle =
+    recnik["red"] = "crveno";
+    recnik["green"] = "zeleno";
+    recnik["blue"] = "plavo";
 
-    cout << "Unesite rec za prevod:" << endl;
+    // Ucitavanje i prevod reci
+	string rec;
+    while (cin >> rec) {
+        map<string,string>::const_iterator it = recnik.find(rec);
 
-    string unos;
-	cout << "Unesite reč koju želite da prevedete: ";
-    cin >> unos;
+        if (it == recnik.end()) {
+            cout << "Trazena rec ne postoji u recniku." << endl;
+        }
+        else {
+            // it->second - first je kljuc, second je vrednost
+            // zbog it koji već pokazuje na tu rec u recniku, mozemo ga iskoristiti da procitamo vrednot
+            cout << "Prevod: " << it->second << endl;
+        }
+    }
 
-    if (recnik[unos] != "")
-        cout<< "Prevod je: " << recnik[unos] << endl;
-    else
-        cout << "Nema prevoda." << endl;
+    // while (cin >> rec) je true sve dok se ne unese Ctrl+D
 
     return 0;
 }
-
-// radili smo ovo drugačije na vežbama
