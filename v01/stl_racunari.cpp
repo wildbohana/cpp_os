@@ -1,92 +1,65 @@
-/* 
-Napisati program koji omogućava evidentiranje fakultetskih učionica.
+/*
+Napisati program koji omogucuje evidenciju fakultetskih ucionica.
+Za svaku ucionicu potrebno je evidentirati naziv ucionice, kvadraturu i racunare koji 
+se nalaze u ucionici. Za svaki racunar evidentiraju se podaci o hard disku i procesoru.
 
-Za svaku učionicu potrebno je evidentirati naziv učionice, kvadraturu i sve računare koji se nalaze u učionici. 
-Za svaki računar evidentiraju se podaci o hard disku i procesoru.
-
-U okviru main funkcije, definisati jednu učionicu koja sadrži dva računara.
-Zatim je potrebno na konzolu ispisati hard disk i procesor svakog računara u učionici.
+U okviru main funkcije, definisati jednu ucionicu koja sadrzi dva racunara.
+Zatim je potrebno na konzolu ispisati hard disk i procesor svakog racunara u ucionici .
 */
 
 #include <iostream>
-#include <string>
-#include <list>
-
-#define MAX 100
+#include <vector>
 
 using namespace std;
 
-
 class Racunar {
-    private:
-        string disk;
-        string procesor;
-    public:
-        Racunar(string hdd, string cpu) {
-			disk = hdd;
-			procesor = cpu;
-		}
+	private:
+		string harddisk;
+		string procesor;
+    public:        
+        Racunar(string hd, string cpu) : harddisk(hd), procesor(cpu) {}
 
-        string getHdd() {
-			return disk;
-		}
-
-        string getCpu() {
-			return procesor;
-		}
+        friend ostream &operator<<(ostream &os, const Racunar &r) {
+            return os << "Hard disk: " << r.harddisk << ", Procesor: " << r.procesor;
+        }
 };
 
 class Ucionica {
     private:
         string naziv;
-        double kvadratura;
+        float kvadratura;
         vector<Racunar> racunari;
     public:
-		Ucionica(string name, int kvad) {
-			naziv = name;
-			kvadratura = kvad;
-		}
+        Ucionica(string n, float kv) : naziv(n), kvadratura(kv) {}
 
-        void dodajRacunar(Racunar &r) {
-			racunari.push_back(r);
-		}
+        void ubaci(Racunar &r) {
+            racunari.push_back(r);
+        }
 
-        string getNaziv() {
-			return naziv;
-		}
+        friend ostream &operator<<(ostream &os, const Ucionica &u) {
+            os << "Naziv: " << u.naziv << ", Kvadratura: " << u.kvadratura << endl;
 
-        int getKvadratura() {
-			return kvadratura;
-		}
+            os << endl;
 
-        vector<Racunar> getRacunari() {
-			return racunari;
-		}
+            int i = 1;
+            for (auto it = u.racunari.cbegin(); it != u.racunari.cend(); it++, i++) {
+                os << "Racunar" << i + 1 << ": " << *it << endl;
+            }
 
+            return os;
+        }
 };
-
 
 int main()
 {
-    Ucionica u("NTP 333", 50);
+    Racunar r1("Hitachi", "AMD");
+    Racunar r2("Seagate", "Intel");
 
-    Racunar r1("Seagate", "Intel");
+    Ucionica u1("NTP-316", 25);
+    u1.ubaci(r1);
+    u1.ubaci(r2);
 
-    Racunar r2("WD", "AMD");
-
-    u.dodajRacunar(r1);
-    u.dodajRacunar(r2);
-
-    // Ispis učionice
-    cout << "--------UCIONICA--------" << endl;
-    cout << "Naziv: " << u.getNaziv() << endl;
-    cout << "Kvadratura: " << u.getKvadratura() << endl;
-	
-    cout << "--------RACUNARI--------" << endl;
-    for (int i = 0; i < 2; i++) {
-        cout << "HDD:"  << u.getRacunari()[i].getHdd() << " ";
-        cout << "CPU:"  << u.getRacunari()[i].getCpu() << endl;
-    }
+    cout << u1;
 
     return 0;
 }
