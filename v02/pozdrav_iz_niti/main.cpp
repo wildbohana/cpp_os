@@ -1,5 +1,6 @@
 /*
-Napraviti program koji kreira jednu nit i u okviru niti ispisuje proizvoljnu reÄenicu.
+Napraviti program koji kreira jednu nit i 
+u okviru niti ispisuje proizvoljnu recenicu.
 */
 
 #include <iostream>
@@ -7,13 +8,14 @@ Napraviti program koji kreira jednu nit i u okviru niti ispisuje proizvoljnu reÄ
 
 using namespace std;
 
-void f() {
-    cout << "Hello world!" << endl;
+void pozdrav() {
+    cout << "Pozdrav iz niti!" << endl;
 }
 
 int main()
 {
-    thread(f).join();
+	// join moze i odmah da se pozove
+    thread(pozdrav).join();
 
     return 0;
 }
