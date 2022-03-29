@@ -1,32 +1,36 @@
 /*
 Uneti 5 celih brojeva sa standardnog ulaza.
-Korišćenjem STL algoritma sortirati brojeve u rastućem redosledu.
+Koriscenjem STL algoritma sortirati brojeve u rastucem redosledu
 */
+
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-int main() {
+int main()
+{
+	// vector: 0 0 0 0 0
+    	vector<int> brojevi(5);     
 
-	vector<int> brojevi;
-	
-	cout << "Unesite 5 brojeva:" << endl;
+	// Unos 5 brojeva
+    	cout << "Unesite 5 brojeva: ";
+    	for (int i = 0; i < brojevi.size(); i++) {
+		cin >> brojevi[i];
+	}
 
-    int br;
-    for (int i = 0; i < 5; i++) {
-        cin >> br;
-        brojevi.push_back(br);
-    }
+	// Koristimo begin i end za rastuci redosled
+    	sort(brojevi.begin(), brojevi.end());
 
-    sort(brojevi.begin(), brojevi.end());
-    // reverse(brojevi.begin(), brojevi.end());
+    	cout << endl;
 
 	// Ispis
-    cout << "Sortirano rastuce: " << endl;
-    for(auto it : brojevi)
-        cout << it << endl;
+    	cout << "Sortiran niz" << endl;
+    	for (int i = 0; i < brojevi.size(); i++) {
+        	cout << brojevi[i] << " ";
+    	}
+	cout << endl;
 
-    return 0;
+    	return 0;
 }
