@@ -9,19 +9,21 @@ Funkcija f nalazi se u fajlu suma_vektora.h.
 Pri tome, "ci" je definicija tipa koja služi tome da se kraće zapisuje tip vector<double>::const_iterator.
 Funkcija nema povratnu vrednost jer se rezultat prosleđuje kroz parametar "zbir".
 
-Potrebno je implementirati i funkciju sumiraj (fajl niti.h) koja treba da pokrene više niti i da svakoj niti prosledi jedan deo elemenata ulaznog vektora.
+Potrebno je implementirati i funkciju sumiraj (fajl niti.h) koja treba da pokrene više niti 
+i da svakoj niti prosledi jedan deo elemenata ulaznog vektora.
 Sve niti treba da koriste funkciju f kako bi izračunale sumu svog dela vektora.
 
-Podeliti računanje sume na N delova tako da svaka nit dobije relativno jednak broj elemenata. Taj broj elemenata treba da bude jednak: broj_elemenata_ulaza / N.
+Podeliti računanje sume na N delova tako da svaka nit dobije relativno jednak broj elemenata. 
+Taj broj elemenata treba da bude jednak: broj_elemenata_ulaza / N.
 Poslednja nit može dobiti i nešto veći broj elemenata na obradu u slučaju da ova dva broja nisu deljiva.
 Na primer:
 
 1. 12 elemenata ulaza i 4 niti
-   12 / 4 = 3 -> 3 elementa ulaza se prosleđuju svakoj niti
+    12 / 4 = 3 -> 3 elementa ulaza se prosleđuju svakoj niti
 
 2. 12 elemenata ulaza i 5 niti
-   12 / 5 = 2 (celobrojno deljenje brojeva odbacuje deo broja iza decimalnog zareza)
-   2 elementa se prosleđuju nitima 0, 1, 2 i 3. Nit broj 4 dobija preostala 4 elementa.
+    12 / 5 = 2 (celobrojno deljenje brojeva odbacuje deo broja iza decimalnog zareza)
+    2 elementa se prosleđuju nitima 0, 1, 2 i 3. Nit broj 4 dobija preostala 4 elementa.
 */
 
 #include <iostream>
@@ -50,8 +52,9 @@ void testirajNiti() {
 
 int main() {
     testirajSumu();
+    
     // Otkomentarisati kada implementirate funkciju sumiraj:
     testirajNiti();
-
+    
     return 0;
 }
