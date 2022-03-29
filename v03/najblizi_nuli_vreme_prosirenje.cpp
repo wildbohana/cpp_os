@@ -56,7 +56,7 @@ int main() {
 
         cout << "Nit[" << i << "]" << endl;
 
-		// Dodato
+	// Dodato
         duration<double, milli> dms = vremena[i].kraj - vremena[i].pocetak;
         duration<double> ds = dms;
         duration<double, ratio<60>> dm = dms;
