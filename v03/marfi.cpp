@@ -39,55 +39,57 @@ default_random_engine generator;
 
 void kasa(int broj_kupaca, duration<double, milli> &vreme_na_kasi) {
 	// Svima dodeli vreme cekanja u redu
-    uniform_int_distribution<int> dist(1, MAX_MILISEKUNDI_PO_KUPCU);
+	uniform_int_distribution<int> dist(1, MAX_MILISEKUNDI_PO_KUPCU);
 
-    // Uzimanje vremena pre pocetka izvrsavanja
-    steady_clock::time_point pocetak = steady_clock::now();
+	// Uzimanje vremena pre pocetka izvrsavanja
+	steady_clock::time_point pocetak = steady_clock::now();
 
-    // Simuliranje cekanja
+	// Simuliranje cekanja
 	for(int i = 0; i < broj_kupaca; i++) {
 		// Svaki kupac ce da bude u redu za kasu odredjeno vreme, i za to vreme ce njegova nit biti uspavana
-        this_thread::sleep_for(milliseconds(dist(generator)));
-    }
+		this_thread::sleep_for(milliseconds(dist(generator)));
+	}
 
 	// Uzimanje vremena nakon zavrsetka izvrsavanja
 	// Moze i auto umesto steady_clock::time_point
-    steady_clock::time_point kraj = steady_clock::now();
-	
+	steady_clock::time_point kraj = steady_clock::now();
+
 	// Ukupno cekanje = vreme zavrsetka - vreme pocetka
-    vreme_na_kasi = kraj - pocetak;
+	vreme_na_kasi = kraj - pocetak;
 }
 
 int main() {
 	// Inicijalizacija generatora slucajnih brojeva da pri svakom pokretanju daje razlicite brojeve
-    generator.seed(system_clock::now().time_since_epoch().count());
+	generator.seed(system_clock::now().time_since_epoch().count());
 
-    // Odredjivanje kase na koju klijent zeli da ode:
-    int moja_kasa;
-    cout << "Unesite kasu na kojoj cete stati u red (0, 1 ili 2):" << endl;
-    cin >> moja_kasa;
+	// Odredjivanje kase na koju klijent zeli da ode:
+	int moja_kasa;
+	cout << "Unesite kasu na kojoj cete stati u red (0, 1 ili 2):" << endl;
+	cin >> moja_kasa;
 
-    // Pravimo niz koji ce da sadrzi vremena cekanja na svakoj od kasa
-    duration<double, milli> vremena[UKUPNO_KASA];
+	// Pravimo niz koji ce da sadrzi vremena cekanja na svakoj od kasa
+	duration<double, milli> vremena[UKUPNO_KASA];
 	// Svakoj kasi se dodeljuje od 1 do 30 kupaca
-    uniform_int_distribution<int> dist(1, 30);
+	uniform_int_distribution<int> dist(1, 30);
 
 	// Somulacija cekanja (za sve 3 kase)
-    thread niti[UKUPNO_KASA];
-    for (int i = 0; i < UKUPNO_KASA; ++i) {
-        niti[i] = thread(kasa, dist(generator), ref(vremena[i]));
-    }
+	thread niti[UKUPNO_KASA];
+	for (int i = 0; i < UKUPNO_KASA; ++i) {
+		niti[i] = thread(kasa, dist(generator), ref(vremena[i]));
+	}
 
-    for (int i = 0; i < UKUPNO_KASA; ++i) {
-        niti[i].join();
-    }
+	for (int i = 0; i < UKUPNO_KASA; ++i) {
+		niti[i].join();
+	}
 
-    // Pronalazenje reda u kojem se najduze cekalo
-    int najsporija = max_element(vremena, &vremena[UKUPNO_KASA]) - vremena;
+	// Pronalazenje reda u kojem se najduze cekalo
+	int najsporija = max_element(vremena, &vremena[UKUPNO_KASA]) - vremena;
 
-    // Provera zakona
-    cout << "Marfijev zakon ";
-    if(najsporija != moja_kasa)
-        cout << "ni";			// lmao genijalno
-    cout << "je potvrdjen.";
+	// Provera zakona
+	cout << "Marfijev zakon ";
+	if(najsporija != moja_kasa)
+		cout << "ni";			// lmao genijalno
+	cout << "je potvrdjen.";
+	
+	return 0;
 }
