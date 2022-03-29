@@ -10,22 +10,22 @@ ih ispisuje u obrnutom redosledu (poslednja prihvacena linija se ispisuje prva).
 using namespace std;
 
 int main() {
-    vector<string> linije;
-    string linija;
+	vector<string> linije;
+	string linija;
 	
 	cout << "Unesite linije:" << endl;
     
 	// Ucitavanje stringova
 	while (getline(cin, linija)) {
-        linije.push_back(linija);
+        	linije.push_back(linija);
 	}
 
-    cout << "Ispis obrnuto:" << endl;
+	cout << "Ispis obrnuto:" << endl;
 	
 	// Za obrnuti ispis koristimo reverse iteratore
-    for (auto it = linije.crbegin(); it != linije.crend(); it++) {
-        cout << "Recenica" << i << ": " << *it << endl;
+	for (auto it = linije.crbegin(); it != linije.crend(); it++) {
+        	cout << "Recenica" << i << ": " << *it << endl;
 	}
 
-    return 0;
+	return 0;
 }
