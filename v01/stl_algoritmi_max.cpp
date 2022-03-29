@@ -1,6 +1,6 @@
 /*
-Korisnik treba da unese 5 celih brojeva koristeći tastaturu (standardni ulaz).
-Korišćenjem STL algoritma, među tih 5 brojeva potrebno je pronaći najveći.
+Korisnik treba da unese 5 celih brojeva koristeci tastaturu (standardni ulaz).
+Koriscenjem STL algoritma, medju tih 5 brojeva potrebno je pronaci najveći.
 */
 
 #include <iostream>
@@ -11,16 +11,17 @@ using namespace std;
 
 int main()
 {
-	vector<int> brojevi;
+	// vector: 0 0 0 0 0
+	vector<int> brojevi(5);	
 
+	// Unos brojeva
     cout << "Unesite brojeve: " << endl;
-    for (int i = 0; i < 5; i++) {
-        int br;
-        cin >> br;
-        brojevi.push_back(br);
+    for (int i = 0; i < brojevi.size(); i++) {
+        cin >> brojevi[i];
     }
 
-    cout << "Najveći element je: " << *max_element(brojevi.begin(), brojevi.end()) << endl;
+	// Pronalazenje maksimalnog elementa
+    cout << "Najveći element je: " << *max_element(brojevi.cbegin(), brojevi.cend()) << endl;
 	
     return 0;
 }
