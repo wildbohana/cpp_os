@@ -14,28 +14,27 @@ using namespace std;
 
 // Funkcija koja inkrementira prosledjeni parametar
 void increment(int &a) {
-    a++;
+	a++;
 }
 
-int main()
-{
-    int a = 3;
-    cout << a << endl;
+int main() {
+	int a = 3;
+	cout << a << endl;
 
-    // Obicno pozivanje funkcije
+	// Obicno pozivanje funkcije
 	increment(a);
-    cout << a << endl;
+	cout << a << endl;
 
-    // Pozivanje funkcije iz niti
-    // ref() - operator reference, obavezan ako rezultat treba da se sacuva
+	// Pozivanje funkcije iz niti
+	// ref() - operator reference, obavezan ako rezultat treba da se sacuva
 	// Nece raditi ako posaljemo samo b bez ref() ispred
-    thread t(increment, ref(a));
+	thread t(increment, ref(a));
 
 	// Tek nakon izvrsenja ove linije može se smatrati da je b dobilo zeljenu vrednost
-    t.join();
+	t.join();
 
 	// Ispis vrednosti a
-    cout << a << endl;
+	cout << a << endl;
 
-    return 0;
+	return 0;
 }
