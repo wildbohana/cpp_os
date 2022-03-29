@@ -29,40 +29,40 @@ Sabiranje korespodentnih elemenata je sabiranje matrica (vektora).
 using namespace std;
 
 void testirajSumu() {
-    vector<double> a = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    vector<double> b = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    vector<double> sum(a.size());
+	vector<double> a = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	vector<double> b = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	vector<double> sum(a.size());
 
 	// Sekvencijalno sumiranje
-    f(a.begin(), a.end(), b.begin(), sum.begin());
+	f(a.begin(), a.end(), b.begin(), sum.begin());
 
-    cout << "Suma vektora pozivom funkcije f:" << endl;
+	cout << "Suma vektora pozivom funkcije f:" << endl;
 
-    for (vector<double>::const_iterator it = sum.begin(); it != sum.end(); it++) {
-        cout << *it << endl;
-    }
+	for (vector<double>::const_iterator it = sum.begin(); it != sum.end(); it++) {
+		cout << *it << endl;
+	}
 }
 
 void testirajNiti() {
-    vector<double> a = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    vector<double> b = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    vector<double> sum(a.size());
+	vector<double> a = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	vector<double> b = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+	vector<double> sum(a.size());
 
 	// Sumiranje preko niti
-    sum = sumiraj(a, b);
+	sum = sumiraj(a, b);
 
-    cout << "Suma vektora, koriscenjem 2 niti: " << endl;
+	cout << "Suma vektora, koriscenjem 2 niti: " << endl;
 
-    for (vector<double>::const_iterator it = sum.begin(); it != sum.end(); it++) {
-        cout << *it << endl;
-    }
+	for (vector<double>::const_iterator it = sum.begin(); it != sum.end(); it++) {
+		cout << *it << endl;
+	}
 }
 
 int main() {
-    testirajSumu();
-	
-    // Otkomentarisati kada implementirate funkciju sumiraj:
-    testirajNiti();
+	testirajSumu();
 
-    return 0;
+	// Otkomentarisati kada implementirate funkciju sumiraj:
+	testirajNiti();
+
+	return 0;
 }
