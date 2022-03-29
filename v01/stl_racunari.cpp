@@ -16,50 +16,50 @@ class Racunar {
 	private:
 		string harddisk;
 		string procesor;
-    public:        
-        Racunar(string hd, string cpu) : harddisk(hd), procesor(cpu) {}
+	public:        
+        	Racunar(string hd, string cpu) : harddisk(hd), procesor(cpu) {}
 
         friend ostream &operator<<(ostream &os, const Racunar &r) {
-            return os << "Hard disk: " << r.harddisk << ", Procesor: " << r.procesor;
+        	return os << "Hard disk: " << r.harddisk << ", Procesor: " << r.procesor;
         }
 };
 
 class Ucionica {
-    private:
-        string naziv;
-        float kvadratura;
-        vector<Racunar> racunari;
-    public:
-        Ucionica(string n, float kv) : naziv(n), kvadratura(kv) {}
+	private:
+        	string naziv;
+        	float kvadratura;
+        	vector<Racunar> racunari;
+	public:
+        	Ucionica(string n, float kv) : naziv(n), kvadratura(kv) {}
 
-        void ubaci(Racunar &r) {
-            racunari.push_back(r);
-        }
+        	void ubaci(Racunar &r) {
+        		racunari.push_back(r);
+        	}
 
-        friend ostream &operator<<(ostream &os, const Ucionica &u) {
-            os << "Naziv: " << u.naziv << ", Kvadratura: " << u.kvadratura << endl;
+        	friend ostream &operator<<(ostream &os, const Ucionica &u) {
+            		os << "Naziv: " << u.naziv << ", Kvadratura: " << u.kvadratura << endl;
 
-            os << endl;
+            		os << endl;
 
-            int i = 1;
-            for (auto it = u.racunari.cbegin(); it != u.racunari.cend(); it++, i++) {
-                os << "Racunar" << i + 1 << ": " << *it << endl;
-            }
+            		int i = 1;
+            		for (auto it = u.racunari.cbegin(); it != u.racunari.cend(); it++, i++) {
+                	os << "Racunar" << i + 1 << ": " << *it << endl;
+            	}
 
-            return os;
+        	return os;
         }
 };
 
 int main()
 {
-    Racunar r1("Hitachi", "AMD");
-    Racunar r2("Seagate", "Intel");
+	Racunar r1("Hitachi", "AMD");
+	Racunar r2("Seagate", "Intel");
 
-    Ucionica u1("NTP-316", 25);
-    u1.ubaci(r1);
-    u1.ubaci(r2);
+	Ucionica u1("NTP-316", 25);
+	u1.ubaci(r1);
+	u1.ubaci(r2);
 
-    cout << u1;
+	cout << u1;
 
-    return 0;
+	return 0;
 }
