@@ -1,18 +1,27 @@
 /*
-Napraviti program koji ispituje ispravnost jednog od Marfijevih zakona, koji glasi: "red u kojem ste odlučili da čekate je najsporiji".
+Napraviti program koji ispituje ispravnost jednog od Marfijevih zakona, koji glasi: 
+"red u kojem ste odlučili da čekate je najsporiji".
 
-Program predstavlja simulaciju rada tri kase za naplatu robe. Svaka kasa ispred sebe ima red kupaca i svaka kasa je simulirana radom jedne programske niti. Potrebno je implementirati funkciju kasa, koja simulira rad jedne kase.
+Program predstavlja simulaciju rada tri kase za naplatu robe. 
+Svaka kasa ispred sebe ima red kupaca i svaka kasa je simulirana radom jedne programske niti. 
+Potrebno je implementirati funkciju kasa, koja simulira rad jedne kase.
 
 Program već sadrži implementiranu funkciju main koja radi sledeće:
 - Pita korisnika u koji red želi da stane da čeka (redovi su označeni brojevima 0, 1 i 2).
 - Kreira se tri niti, pri čemu svaka simulira funkcionisanje kase u odgovarajućem redu čekanja.
 - Meri se ukupno vreme čekanje u svakom od redova (ispred svake od kasa).
 
-Prilikom kreiranja, svaka nit dobija parametar koji predstavlja broj kupaca koje kasa treba da opsluži. Ovo je slučajan broj u opsegu 1..30, koji se generiše u funkciji main. Opsluživanje svakog kupca simulirati uspavljivanjem niti na slucajan vremenski period izmedju 1 i 100 ms. Takođe, funkcija kasa treba da meri ukupno vreme obrade svih kupaca i to vreme treba da vrati kroz parametar vreme_na_kasi.
+Prilikom kreiranja, svaka nit dobija parametar koji predstavlja broj kupaca 
+koje kasa treba da opsluži. Ovo je slučajan broj u opsegu 1..30, koji se generiše 
+u funkciji main. Opsluživanje svakog kupca simulirati uspavljivanjem niti na slucajan 
+vremenski period izmedju 1 i 100 ms. Takođe, funkcija kasa treba da meri ukupno vreme 
+obrade svih kupaca i to vreme treba da vrati kroz parametar vreme_na_kasi.
 
 Pošto se implementira funkcija kasa, potrebno je još implementirati u funkciji main:
 - Naći koji je red (0, 1 ili 2) najduže obrađivan.
-- Uporediti to sa redom koji je korisnik izabrao. Ako je korisnik izabrao najsporiji red, ispisati da je Marifijev zakon potvrđen, u suprotnom ispisati da je Marfi, u ovoj konkretnoj simulaciji, na žalost omanuo.
+- Uporediti to sa redom koji je korisnik izabrao. Ako je korisnik izabrao najsporiji red, 
+  ispisati da je Marifijev zakon potvrđen, u suprotnom ispisati da je Marfi, 
+  u ovoj konkretnoj simulaciji, na žalost omanuo.
 */
 
 #include <iostream>
