@@ -1,5 +1,6 @@
 /*
-Napraviti program koji prihvata proizvoljan broj linija sa standardnog ulaza i zatim ih ispisuje u redosledu kojim su uneti.
+Napraviti program koji prihvata proizvoljan broj linija 
+sa standardnog ulaza i zatim ih ispisuje u redosledu kojim su uneti.
 */
 
 #include <iostream>
