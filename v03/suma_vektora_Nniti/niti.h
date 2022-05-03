@@ -25,7 +25,7 @@ double sumiraj(vector<double> v, int n)
 	ci pocetak = v.begin();
 	ci kraj = pocetak + v.size()/n;
 
-	// obrati paznju: IDE DO N-1, NE DO N
+	// Obrati paznju: IDE DO N-1, NE DO N
 	for (int i = 0; i < n-1; i++)
 	{
 		t[i] = thread(f, pocetak, kraj, ref(zbir[i]));
@@ -33,7 +33,7 @@ double sumiraj(vector<double> v, int n)
 		kraj += v.size()/n;
 	}
 
-	// za N imamo poseban slucaj
+	// Za N imamo poseban slucaj
 	t[n-1] = thread(f, pocetak, v.end(), ref(zbir[n-1]));
 
 	for (int i = 0; i < n; i++)
