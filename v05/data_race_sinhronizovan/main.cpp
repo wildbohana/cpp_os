@@ -1,8 +1,8 @@
 /*
-Izmeniti program data_race i realizovati zaštitu pristupa brojaču uz pomoć klase mutex i njenih operacija lock() i unlock(). Primetiti koliko sada traje izvršavanje programa.
+Izmeniti program data_race i realizovati zaštitu pristupa brojaču 
+uz pomoć klase mutex i njenih operacija lock() i unlock(). 
+Primetiti koliko sada traje izvršavanje programa.
 */
-
-// THIS ONE AS WELL
 
 #include <iostream>
 #include <thread>
@@ -42,7 +42,8 @@ int main()
 
 	t1.join();
 	t2.join();
-
+	
+	// Traje Boga oca, ali se dobije 0 na kraju
 	cout << brojac << endl;
 
 	return 0;
