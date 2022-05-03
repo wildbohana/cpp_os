@@ -2,6 +2,7 @@
 Proširiti zadatak najbilzi_nuli_vreme ispisom u sekundama i minutima.
 */
 
+// kopi pejst prethodnog + prosirenje na kraju
 
 #include <iostream>
 #include <thread>
