@@ -1,9 +1,11 @@
 /*
 Napraviti konkurentni program koji pronalazi element najbliži broju 0 u zadatom vektoru brojeva.
 
-Pretragu podeliti u 3 programske niti. Ulazni vektor brojeva treba da sadrži 900.000 slučajno generisanih brojeva.
+Pretragu podeliti u 3 programske niti. 
+Ulazni vektor brojeva treba da sadrži 900.000 slučajno generisanih brojeva.
 
-Za svaku nit, evidentirati trenutke kada je izvršavanje počelo i kada se završilo. Na kraju programa, ispisati koliko je trajalo izvršavanje svake niti u milisekundama.
+Za svaku nit, evidentirati trenutke kada je izvršavanje počelo i kada se završilo. 
+Na kraju programa, ispisati koliko je trajalo izvršavanje svake niti u milisekundama.
 */
 
 #include <iostream>
@@ -85,6 +87,5 @@ int main()
 		duration<double, milli> trajanje = vremena[i].kraj - vremena[i].pocetak;
 		cout << "Nit " << i+1 << " se izvrsavala " << trajanje.count() << " milisekundi," << endl;
 	}
-
 }
 
