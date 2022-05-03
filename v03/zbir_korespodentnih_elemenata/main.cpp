@@ -1,14 +1,19 @@
 /*
-Napraviti konkurentni program (koristeći funkciju f()) koji sabira korespondentne elemente kontejnera a i b, i rezultat smešta u vektor zbir.
+Napraviti konkurentni program (koristeći funkciju f()) koji sabira korespondentne 
+elemente kontejnera a i b, i rezultat smešta u vektor zbir.
 
 typedef vector<double>::const_iterator ci;
 void f(ci a_begin, ci a_end, ci b_begin, vector<double>::iterator sum_begin);
 
 Funkciju f implementirati u fajlu suma_vektora.h.
 
-Rezultat se upisuje korišćenjem iteratora sum_begin. Zato je neophodno da vektor nad kojim je kreiran taj iterator bude kreiran pre poziva funkcije f. Taj vektor mora da sadrži dovoljno mesta za upis svih elemenata.
+Rezultat se upisuje korišćenjem iteratora sum_begin. 
+Zato je neophodno da vektor nad kojim je kreiran taj iterator bude kreiran pre poziva funkcije f. 
+Taj vektor mora da sadrži dovoljno mesta za upis svih elemenata.
 
-Funkciju sumiraj implementirati u fajlu niti.h. Ova funkcija treba da pokrene dve niti koje će, koristeći funkciju f, da izračunaju korespondentne sume vektora. I to tako da svaka nit obradi svoju polovinu elemenata (prva nit prvu polovinu, druga nit drugu polovinu).
+Funkciju sumiraj implementirati u fajlu niti.h. Ova funkcija treba da pokrene dve niti 
+koje će, koristeći funkciju f, da izračunaju korespondentne sume vektora. 
+I to tako da svaka nit obradi svoju polovinu elemenata (prva nit prvu polovinu, druga nit drugu polovinu).
 
 Program optimizovati za procesor sa 2 jezgra.
 
@@ -51,7 +56,8 @@ void testirajNiti()
     cout << "Suma vektora, koriscenjem 2 niti: " << endl;
 
 	vector<double>::const_iterator ci;
-    for (ci = sum.begin(); ci != sum.end(); ci++) {
+    for (ci = sum.begin(); ci != sum.end(); ci++) 
+    {
         cout << *ci << endl;
     }
 }
