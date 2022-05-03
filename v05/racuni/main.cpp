@@ -1,9 +1,17 @@
 /*
-Napraviti program koji simulira prenos novca unutar jedne banke, sa jednog bankovnog računa na drugi. Iznosi na računima u banci su predstavljeni datim nizom racuni. Taj niz sadrži onoliko elemenata koliko iznosi konstanta UKUPNO_RACUNA. Svaki element niza predstavlja jedan račun u banci.
+Napraviti program koji simulira prenos novca unutar jedne banke, sa jednog bankovnog računa na drugi. 
+Iznosi na računima u banci su predstavljeni datim nizom racuni. 
+Taj niz sadrži onoliko elemenata koliko iznosi konstanta UKUPNO_RACUNA. 
+Svaki element niza predstavlja jedan račun u banci.
 
-Funkcija main() popunjava sve račune u banci iznosom POCETNI_IZNOS. Potom ona kreira dve niti koje vrše transfer novca sa jednog računa na drugi. Ovaj prenos obavlja funkcija transfer().
+Funkcija main() popunjava sve račune u banci iznosom POCETNI_IZNOS. 
+Potom ona kreira dve niti koje vrše transfer novca sa jednog računa na drugi. 
+Ovaj prenos obavlja funkcija transfer().
 
-Data funkcija transfer() predstavlja telo niti koje vrše prenos novca. Funkcija 10 puta na slučajan način bira dva računa i neki iznos novca i poziva funkciju prebaci() koja skida novac sa prvog racuna i dodaje ga na drugi račun. Ovu funkciju je potrebno implementirati.
+Data funkcija transfer() predstavlja telo niti koje vrše prenos novca. 
+Funkcija 10 puta na slučajan način bira dva računa i neki iznos novca i poziva 
+funkciju prebaci() koja skida novac sa prvog racuna i dodaje ga na drugi račun. 
+Ovu funkciju je potrebno implementirati.
 */
 
 #include <iostream>
@@ -31,7 +39,8 @@ izvor - indeks računa SA KOJEG se prebacuje novac (indeks u nizu "racuni")
 cilj  - indeks računa NA KOJI se prebacuje novac (indeks u nizu "racuni")
 iznos - novčani iznos koji se prebacuje
 
-Nakon skidanja novca sa prvog računa potrebna je jedna sekunda da se novac uplati na drugi račun (trajanje ove operacije simulirati pauziranjem niti).
+Nakon skidanja novca sa prvog računa potrebna je jedna sekunda da se novac uplati 
+na drugi račun (trajanje ove operacije simulirati pauziranjem niti).
 Povratna vrednost funkcije je struktura retVal koja sadrži iznos na prvom računu (izvor) pre i posle transakcije.
 */
 
@@ -72,7 +81,8 @@ void transfer()
 		else
             cout << "NEUSPESNO: ";
 
-        cout << "Prebaceno " << iznos << " sa racuna " << izvor << " na racun " << cilj << ". Na izvoru bilo " << r.staro << ", a ostalo " << r.novo << endl;
+        cout << "Prebaceno " << iznos << " sa racuna " << izvor << " na racun " 
+		<< cilj << ". Na izvoru bilo " << r.staro << ", a ostalo " << r.novo << endl;
     }
 }
 
