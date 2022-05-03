@@ -15,32 +15,58 @@ Data funkcija transfer() predstavlja telo niti koje vrše prenos novca. Funkcija
 
 using namespace std;
 
-struct retVal{
-    double staro; // Iznos novca na računu pre prenosa
-    double novo; // Iznos novca na računu posle prenosa
+// Dodato - mora globalan mutex jer sa vise strana pristupamo istom resursu
+mutex m;
+
+struct retVal {
+    double staro; 		// Iznos novca na računu pre prenosa
+    double novo; 		// Iznos novca na računu posle prenosa
 };
 
-double racuni[UKUPNO_RACUNA]; // Svaki element niza predstavlja iznos novca na odgovarajućem računu
+// Svaki element niza predstavlja iznos novca na odgovarajućem računu
+double racuni[UKUPNO_RACUNA]; 
 
-// izvor - indeks računa SA KOJEG se prebacuje novac (indeks u nizu "racuni")
-// cilj - indeks računa NA KOJI se prebacuje novac (indeks u nizu "racuni")
-// iznos - novčani iznos koji se prebacuje
-// Nakon skidanja novca sa prvog računa potrebna je jedna sekunda da se novac uplati na drugi račun (trajanje ove operacije simulirati pauziranjem niti).
-// Povratna vrednost funkcije je struktura retVal koja sadrži iznos na prvom računu (izvor) pre i posle transakcije.
-retVal prebaci(int izvor, int cilj, double iznos) {
-	// Implementirati...
+/* 
+izvor - indeks računa SA KOJEG se prebacuje novac (indeks u nizu "racuni")
+cilj  - indeks računa NA KOJI se prebacuje novac (indeks u nizu "racuni")
+iznos - novčani iznos koji se prebacuje
+
+Nakon skidanja novca sa prvog računa potrebna je jedna sekunda da se novac uplati na drugi račun (trajanje ove operacije simulirati pauziranjem niti).
+Povratna vrednost funkcije je struktura retVal koja sadrži iznos na prvom računu (izvor) pre i posle transakcije.
+*/
+
+// Implementirati...
+retVal prebaci(int izvor, int cilj, double iznos) 
+{
+	retVal r;
+
+	unique_lock<mutex> l(m);
+
+	r.staro = racuni[izvor];		// trenurno stanje na prvom racunu
+	racuni[izvor] -= iznos;
+
+	// simuliranje trajanja prenosa
+	this_thread::sleep_for(chrono::seconds(1));
+
+	racuni[cilj] += iznos;
+	r.novo = racuni[izvor];			// promenjeno stanje na prvom racunu
+
+	return r;
 }
 
-
-void transfer() {
+void transfer() 
+{
 	// Vrši se deset transakcija:
-    for (int i = 0; i < 10; i++) {
-        int izvor = rand()%UKUPNO_RACUNA; // Slučajni odabir prvog računa
-        int cilj = (izvor+5)%UKUPNO_RACUNA; // Slučajni odabir drugog računa
-        int iznos = rand()%10 + 1; // Slučajni odabir iznosa
-        retVal r = prebaci(izvor, cilj, iznos); // Prebacivanje novca sa jednog računa na drugi
-        // Razlika između novog i starog iznosa na računu mora biti jednaka iznosu koji se prebacivao.
+    for (int i = 0; i < 10; i++) 
+	{
+        int izvor = rand()%UKUPNO_RACUNA; 		// Slučajni odabir prvog računa
+        int cilj = (izvor+5)%UKUPNO_RACUNA; 	// Slučajni odabir drugog računa
+        int iznos = rand()%10 + 1; 				// Slučajni odabir iznosa
 
+		// Prebacivanje novca sa jednog računa na drugi
+        retVal r = prebaci(izvor, cilj, iznos); 
+        
+		// Razlika između novog i starog iznosa na računu mora biti jednaka iznosu koji se prebacivao.
 		if ((r.staro - r.novo) == iznos)
             cout << "Uspesno: ";
 		else
@@ -51,20 +77,24 @@ void transfer() {
 }
 
 // Funkcija za računanje ukupnog iznosa na svim računima`u banci:
-double ukupno_u_banci() {
+double ukupno_u_banci() 
+{
     double ukupno = 0;
-    for (int i = 0; i < UKUPNO_RACUNA; i++)  {
+
+    for (int i = 0; i < UKUPNO_RACUNA; i++)
         ukupno += racuni[i];
-    }
+
     return ukupno;
 }
 
-int main() {
+int main() 
+{
     double ukupno = 0;
+
 	// Inicijalizujemo iznos na svakom računu:
-    for (int i = 0; i < UKUPNO_RACUNA; i++)  {
+    for (int i = 0; i < UKUPNO_RACUNA; i++)
         racuni[i] = POCETNI_IZNOS;
-    }
+    
     cout << "Ukupno novca u banci, na pocetku: " << ukupno_u_banci() << endl;
 
     // Napravimo 2 niti koje će vršiti transfere sa računa na račun:
