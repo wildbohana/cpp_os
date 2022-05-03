@@ -1,9 +1,15 @@
 /*
-Napraviti konkurentni program koji modeluje kreditno poslovanje banke. Banka odobrava kredite u dinarima i u evrima.
+Napraviti konkurentni program koji modeluje kreditno poslovanje banke. 
+Banka odobrava kredite u dinarima i u evrima.
 
-Klijent traži kredit pozivanjem operacije uzmi_kredit(), kojoj prosleđuje svotu koju želi da pozajmi od banke i valutu u kojoj želi da pozajmi. Klijent neko vreme koristi pozajmljena sredstva, pa ih vrati banci pozivanjem operacije vrati_kredit().
+Klijent traži kredit pozivanjem operacije uzmi_kredit(), kojoj prosleđuje 
+svotu koju želi da pozajmi od banke i valutu u kojoj želi da pozajmi. 
+Klijent neko vreme koristi pozajmljena sredstva, pa ih vrati banci pozivanjem operacije vrati_kredit().
 
-Banka inicijalno poseduje određene svote dinara i evra koje pozajmljuje. Banka odobrava kredite dok god ima sredstava. Kada više nema sredstava, banka čeka da klijenti vrate prethodno odobrene kredite pre nego što odobri sledeći kredit. Banka odobrava kredite u proizvoljnom redosledu.
+Banka inicijalno poseduje određene svote dinara i evra koje pozajmljuje. 
+Banka odobrava kredite dok god ima sredstava. Kada više nema sredstava, 
+banka čeka da klijenti vrate prethodno odobrene kredite pre nego što odobri sledeći kredit. 
+Banka odobrava kredite u proizvoljnom redosledu.
 
 Banka teži tome da klijent čiji je zahtev moguće ispuniti (postoje sredstva) ne čeka na kredit.
 
