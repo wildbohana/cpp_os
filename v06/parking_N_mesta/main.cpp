@@ -1,11 +1,15 @@
 /*
-Definisati klasu Parking koja modeluje Parking prostor kapaciteta N mesta. Kapacitet Parkinga proslediti kao argument konstruktoru klase Parking.
+Definisati klasu Parking koja modeluje Parking prostor kapaciteta N mesta. 
+Kapacitet Parkinga proslediti kao argument konstruktoru klase Parking.
 
 Ova klasa ima operacije: udji() i izadji().
 
-Automobili koji dolaze na Parking su predstavljeni programskim nitima. Za ulazak na Parking, automobil poziva metodu udji(). Za izlazak sa Parkinga, automobil poziva metodu izadji().
+Automobili koji dolaze na Parking su predstavljeni programskim nitima. 
+Za ulazak na Parking, automobil poziva metodu udji(). 
+Za izlazak sa Parkinga, automobil poziva metodu izadji().
 
-Automobil se na Parkingu zadržava od 1 do 3 sekunde. Pri ulasku, ukoliko je Parking zauzet, automobil mora da sačeka da se neko parking mesto oslobodi.
+Automobil se na Parkingu zadržava od 1 do 3 sekunde. Pri ulasku, ukoliko 
+je Parking zauzet, automobil mora da sačeka da se neko parking mesto oslobodi.
 
 Implementirati označene metode u klasi Parking u fajlu parking.h
 */
