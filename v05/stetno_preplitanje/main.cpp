@@ -1,5 +1,6 @@
 /*
-Napraviti konkurentni program koji u funkciji visina pita korisnika koliko je visok. Nakon toga korisnik unosi svoju visinu. Na kraju u funkciji se ispisuje uneta visina.
+Napraviti konkurentni program koji u funkciji visina pita korisnika koliko je visok. 
+Nakon toga korisnik unosi svoju visinu. Na kraju u funkciji se ispisuje uneta visina.
 
 Kreirati 2 niti od date funkcije. Ispratiti ispis.
 */
@@ -12,7 +13,7 @@ using namespace std;
 
 /* 
 Pri pristupu terminalu desava se stetno preplitanje
-(druga nit moze da dobije pristup terminalu pre nego je prva nit zavrsila ispis)
+(druga nit moze da dobije pristup terminalu pre nego je prva nit zavrsila ispis).
 */
 
 void visina()
