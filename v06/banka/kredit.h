@@ -19,7 +19,7 @@ class Kredit
 		*/
 		void ceka(int rbr, int svota, Valuta valuta) 
 		{
-		cout << "Klijent: " << rbr << " mora da ceka kako bi dobio kredit od " << svota << " " << naziv_valute(valuta) << endl;
+			cout << "Klijent: " << rbr << " mora da ceka kako bi dobio kredit od " << svota << " " << naziv_valute(valuta) << endl;
 		}
 
 		/*
