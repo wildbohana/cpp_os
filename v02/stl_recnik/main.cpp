@@ -21,7 +21,7 @@ int main()
 
 	string uneta_engl_rec;
 
-	while(getline(cin, uneta_engl_rec))
+	while (getline(cin, uneta_engl_rec))
 		cout << "Prevod: " << recnik[uneta_engl_rec] << endl;
 
     return 0;
