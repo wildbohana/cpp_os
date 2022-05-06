@@ -14,6 +14,7 @@ class Banka
 {
 	private:
 		Kredit& kredit;
+		// Dodato:
 	    int dsaldo;
 	    int esaldo;
 		mutex m;
