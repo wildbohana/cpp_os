@@ -15,7 +15,7 @@ int main()
 	vector<string> linije;
 
 	cout << "Unesite liniju po liniju (ctrl+d za kraj unosa):" << endl;
-	while(getline(cin, linija))
+	while (getline(cin, linija))
 	{
 		linije.push_back(linija);
 	}
