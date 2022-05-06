@@ -15,13 +15,13 @@ using namespace std;
 
 vector<int> min_n(const vector<int>& v,	int n)
 {
-	vector<int> kopija = v;
-	sort(kopija.begin(), kopija.end());
+	vector<int> original = v;
+	sort(original.begin(), original.end());
 	
 	vector<int> ret_val;		// povratni vektor
 	ret_val.resize(n);			// alociranje n mesta
 
-	copy(kopija.begin(), kopija.begin() + n, ret_val.begin());
+	copy(original.begin(), original.begin() + n, ret_val.begin());
 
 	return ret_val;
 }
@@ -36,6 +36,7 @@ int main()
 	
 	for (it = najmanji_brojevi.begin(); it != najmanji_brojevi.end(); it++)
 		cout << *it << " ";
+	cout << endl;
 
     return 0;
 }
