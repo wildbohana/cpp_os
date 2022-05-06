@@ -27,7 +27,8 @@ class Mec
 		void zavrsen(int rbr, Podaci p) 
 		{
 			duration<double, milli> cekao = p.pocetak - p.dosao;
-			cout << "Mec " << rbr << " je zavrsen. Trajao je: " << p.trajanje.count() << " milisekundi. Takmicari su na pocetak meca cekali " << cekao.count() << " milisekundi. " << endl;
+			cout << "Mec " << rbr << " je zavrsen. Trajao je: " << p.trajanje.count() << " milisekundi. "; 
+			cout << "Takmicari su na pocetak meca cekali " << cekao.count() << " milisekundi. " << endl;
 		}
 };
 
