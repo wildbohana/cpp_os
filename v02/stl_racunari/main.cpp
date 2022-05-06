@@ -22,11 +22,11 @@ class Racunar
 		string hdd;
 		string cpu;
 	public:
-		void set_hdd(string h) { hdd = h; }
-		string get_hdd() { return hdd; }
+		void set_hdd(string h) {hdd = h;}
+		string get_hdd() {return hdd;}
 
-		void set_cpu(string c) { cpu = c; }
-		string get_cpu() { return cpu; }
+		void set_cpu(string c) {cpu = c;}
+		string get_cpu() {return cpu;}
 };
 
 class Ucionica 
