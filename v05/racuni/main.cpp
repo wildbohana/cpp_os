@@ -26,7 +26,8 @@ using namespace std;
 // Dodato - mora globalan mutex jer sa vise strana pristupamo istom resursu
 mutex m;
 
-struct retVal {
+struct retVal 
+{
     double staro; 		// Iznos novca na računu pre prenosa
     double novo; 		// Iznos novca na računu posle prenosa
 };
