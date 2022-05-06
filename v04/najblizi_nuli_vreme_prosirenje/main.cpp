@@ -14,7 +14,8 @@ using namespace chrono;
 
 typedef vector<double>::const_iterator cit;
 
-struct vreme {
+struct vreme 
+{
     system_clock::time_point pocetak;
     system_clock::time_point kraj;
 };
