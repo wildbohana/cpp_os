@@ -18,9 +18,11 @@ class Atletska_staza
 		enum ATHLETE {SKAKAC, BACAC};
 		ATHLETE trenutni;
 		bool slobodno;
-		int skakacaCeka, bacacaCeka;
+		int skakacaCeka;
+		int bacacaCeka;
 		mutex m;
-		condition_variable skakaci, bacaci;
+		condition_variable skakaci;
+		condition_variable bacaci;
 	public:
 		// Prosiriti po potrebi ...
 		Atletska_staza(Takmicar& tak) : takmicar(tak) 
@@ -61,15 +63,11 @@ class Atletska_staza
 			// zauzimamo stazu
 			slobodno = false; 
 
-			// otkljucavamo stazu kako bi skakac mogao da je koristi
 			l.unlock();
-			// ispis da skakac skace
 			takmicar.skakac_skace(rbr);
 			// skok traje 2 sekunde
 			this_thread::sleep_for(seconds(2));
-			// odlazak sa staze
 			system_clock::time_point zavrsio = system_clock::now(); 
-			// zakljucavamo stazu dok neko drugi ne dodje na red da je koristi
 			l.lock();
 
 			// oslobadjamo stazu
@@ -128,15 +126,11 @@ class Atletska_staza
 			// zauzimamo stazu
 			slobodno = false;
 
-			// otkljucavamo stazu kako bi bacac mogao da je koristi
 			l.unlock();
-			// ispis da bacac baca koplje
 			takmicar.bacac_baca(rbr);
 			// bacanje koplja traje 1 sekundu
 			this_thread::sleep_for(seconds(1));
-			// odlazak sa staze
 			system_clock::time_point zavrsio = system_clock::now();
-			// zakljucavamo stazu sve dok neko drugi ne dodje na red da je koristi
 			l.lock();
 
 			// oslobadjamo stazu
@@ -160,7 +154,7 @@ class Atletska_staza
 			pv.rezultat = rand() % 100;
 			pv.trajanje = zavrsio - dosao;
 
-			takmicar.skakac_zavrsio(rbr, pv);
+			takmicar.bacac_zavrsio(rbr, pv);
 
 			return pv;
 		}
