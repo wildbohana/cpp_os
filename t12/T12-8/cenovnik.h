@@ -12,6 +12,17 @@ typedef map<string, double>::const_iterator cit;
 // Implementirati ...
 void nadjiPovoljno(map<string, double> a, map<string, double> b, map<string, double> &jeftino)
 {
+	ci a_begin = a.cbegin();
+
+    for (; a_begin != a.cend(); a_begin++)
+		jeftino[a_begin->first] = min(a_begin->second, b[a_begin->first]);
+}
+
+// malo duza varijanta
+
+/*
+void nadjiPovoljno(map<string, double> a, map<string, double> b, map<string, double> &jeftino)
+{
     for (cit it = a.cbegin(); it != a.cend(); it++)
         for (cit jt = b.cbegin(); jt != b.cend(); jt++)
 			if (it -> first == jt -> first) 
@@ -22,6 +33,7 @@ void nadjiPovoljno(map<string, double> a, map<string, double> b, map<string, dou
                     jeftino.insert({jt -> first, jt -> second});
             }
 }
+*/
 
 // first (kljuc) - ime proizvoda
 // seconds (vrednost) - cena proizvoda
