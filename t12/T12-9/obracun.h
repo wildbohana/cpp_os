@@ -14,7 +14,7 @@ void obracunajUkupno(list<string> kupljeno, map<string, double> cenovnik, double
 
 	list<string>::const_iterator spisak = kupljeno.cbegin();
 	for (; spisak != kupljeno.cend(); spisak++)
-		ukupno += cenovnik[*kupljeno];
+		ukupno += cenovnik[*spisak];
 }
 // malo duza varijanta
 
