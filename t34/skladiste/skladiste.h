@@ -67,7 +67,9 @@ class Skladiste
       		rampa_slobodna[rampa] = false; 
 
 			kamion.istovara(rbr, kolicina, zapaljivo, rampa);
+			
 			// istovar traje onoliko milisekundi koliko ima tona
+			// zato što se nalazi izvan bloka sa unique_lock, ne treba ti l.unlock() i l.lock();
 			this_thread::sleep_for(chrono::milliseconds(kolicina * 1000));
 
 			{
