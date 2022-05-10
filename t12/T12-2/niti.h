@@ -19,11 +19,11 @@ void izracunaj(int brojNiti)
 {
 	thread niti[brojNiti];
 
-    for (int i = 0; i < brojNiti; i++)
-        niti[i] = thread(ispisi, i + 1);
+	for (int i = 0; i < brojNiti; i++)
+		niti[i] = thread(ispisi, i + 1);
 
-    for (int i = 0; i < brojNiti; i++)
-        niti[i].join();
+	for (int i = 0; i < brojNiti; i++)
+		niti[i].join();
 }
 
 #endif // NITI_H
