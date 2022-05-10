@@ -20,17 +20,16 @@ Rezultat izvršavanja treba da bude vector<int> koji sadrži rezultat izvršenja
 // Implementirati ...
 vector<int> izracunaj(vector<int>& a, vector<int>& b)
 {
-    vector<int> rez(16);
+    int n = a.size();
+	vector<int> c(n);
 
-    thread niti[2];
+	thread t1(izvrsiXOR, a.cbegin(), a.cbegin() + n/2, b.cbegin(), c.begin());
+	thread t2(izvrsiXOR, a.cbegin() + n/2, a.cend(), b.cbegin() + n/2, c.begin() + n/2);
 
-    niti[0] = thread(izvrsiXOR, a.cbegin(), a.cbegin() + 8, b.cbegin(), rez.begin());
-    niti[1] = thread(izvrsiXOR, a.cbegin() + 8, a.cend(), b.cbegin() + 8, rez.begin() + 8);
+	t1.join();
+	t2.join();
 
-    niti[0].join();
-    niti[1].join();
-
-    return rez;
+	return c;
 }
 
 #endif // NITI_H
