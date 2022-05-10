@@ -27,15 +27,17 @@ class Teniski_klub
 				slobodan[i] = true;
 		}
 
-		// Metoda koju poziva nit koja simulira mec kako bi izvrsila teniski mec.
-		// Metoda je blokirajuca - ako je zeljeni teren zauzet, izvrsenje ce blokirati dok se on ne oslobodi.
-		//
-		// broj_meca - Redni broj meca
-		// na_terenu - Indeks terena na kojem mec treba da se odigra
-		//
-		// Potrebno je pozvati metodu mec.ceka kada je izabrani teren zauzet i mec mora da ceka.
-		// Potrebno je pozvati metodu mec.pocinje kada se isprazni izabrani teren i mec moze da pocne.
-		// Potrebno je pozvati metodu mec.zavrsen kada se mec zavrsi i mogu se proslediti izmereni vremenski intervali.
+		/*
+		Metoda koju poziva nit koja simulira mec kako bi izvrsila teniski mec.
+		Metoda je blokirajuca - ako je zeljeni teren zauzet, izvrsenje ce blokirati dok se on ne oslobodi.
+		
+		broj_meca - Redni broj meca
+		na_terenu - Indeks terena na kojem mec treba da se odigra
+		
+		Potrebno je pozvati metodu mec.ceka kada je izabrani teren zauzet i mec mora da ceka.
+		Potrebno je pozvati metodu mec.pocinje kada se isprazni izabrani teren i mec moze da pocne.
+		Potrebno je pozvati metodu mec.zavrsen kada se mec zavrsi i mogu se proslediti izmereni vremenski intervali.
+		*/
 		
 		// Implementirati ...
 		void odigraj_mec(int broj_meca, int na_terenu) 
