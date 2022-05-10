@@ -8,86 +8,81 @@
 
 using namespace std;
 
-// Maksimalan broj racunara u ucionici
+// maksimalni broj racunara u ucionici
 #define MAX 50 
 
 class RC 
 {
 	private:
 		Student& student;
-		// Dodato:
-		bool slobodni[MAX];
-		int brojSlobodnih;
-		int brojRacunara;
-		condition_variable cv;
 		mutex m;
+		condition_variable cv;
+		bool slobodan[MAX];
+		int broj_racunara;
+		int broj_slobodnih;
+
 	public:
 		// Prosiriti po potrebi ...
 		RC(Student& st, int br) : student(st) 
 		{
-			brojRacunara = br;
-			brojSlobodnih = brojRacunara;
+			broj_racunara = br;
+			broj_slobodnih = broj_racunara;
 
-			for (int i = 0; i < brojSlobodnih; ++i)
-				slobodni[i] = true;
+			for (int i = 0; i < broj_slobodnih; i++)
+				slobodan[i] = true;
 		}
 
-		/*
-		Metoda koju poziva nit koja simulira studenta kako bi student zauzeo mesto za racunarom.
-		Ova metoda je blokirajuca - ako nema slobodnih mesta, ona ce cekati dok se neko ne oslobodi.
+		// Metoda koju poziva nit koja simulira studenta kako bi student zauzeo mesto za racunarom.
+		// Ova metoda je blokirajuca - ako nema slobodnih mesta, ona ce cekati dok se neko ne oslobodi.
+		//
+		// rbr - Redni broj studenta
+		//
+		// Potrebno je pozvati metodu student.ceka kada su racunari zauzeti i student mora da ceka.
+		// Potrebno je pozvati metodu student.zauzeo kada student zauzme racunar.
 		
-		rbr - Redni broj studenta
-		
-		Potrebno je pozvati metodu student.ceka kada su racunari zauzeti i student mora da ceka.
-		Potrebno je pozvati metodu student.zauzeo kada student zauzme racunar.
-		*/
-
 		// Implementirati ...
 		int zauzmi(int rbr) 
 		{
 			unique_lock<mutex> l(m);
 
-			// ako nema slobodnih racunara, cekaj
-			while (brojSlobodnih == 0) 
+			while (broj_slobodnih == 0)
 			{
 				student.ceka(rbr);
 				cv.wait(l);
 			}
 
-			// indeks zauzetog racunara
-			int retVal;
+			broj_slobodnih--;
 
-			// ako ima slobodnih, trazi prvi koji je slobodan i zauzmi ga
-			for (int i = 0; i < brojRacunara; i++)
-				if (slobodni[i])
+			int id;
+			for (int i = 0; i < broj_racunara; i++)
+				if (slobodan[i])
 				{
-					student.zauzeo(rbr, i);
-					slobodni[i] = false;
-					retVal = i + 1;
+					id = i;
 					break;
 				}
-			
-			brojSlobodnih--;
 
-			return retVal;
+			student.zauzeo(rbr, id);	
+			slobodan[id] = false;	
+
+			return id;	
 		}
 
-		/* 
-		Metoda koju poziva nit koja simulira studenta kako bi oslobodio racunar koji je prethodno zauzeo.
+		// Metoda koju poziva nit koja simulira studenta kako bi oslobodio racunar koji je prethodno zauzeo.
+		//
+		// rbr         - Redni broj studenta
+		// id_racunara - Redni broj racunara kojeg student oslobadja (prethodno je zauzeo taj racunar)
+		//
+		// Potrebno je pozvati metodu student.oslobodio kada student oslobodi racunar.
 		
-		rbr         - Redni broj studenta
-		id_racunara - Redni broj racunara kojeg student oslobadja (prethodno je zauzeo taj racunar)
-		
-		Potrebno je pozvati metodu student.oslobodio kada student oslobodi racunar.
-		*/
-
 		// Implementirati ...
 		void oslobodi(int rbr, int id_racunara) 
 		{
 			unique_lock<mutex> l(m);
-			brojSlobodnih++;
-			student.oslobodio(rbr, id_racunara - 1);
-			slobodni[id_racunara - 1] = true;
+
+			broj_slobodnih++;
+			student.oslobodio(rbr, id_racunara);
+			slobodan[id_racunara] = true;
+
 			cv.notify_one();
 		}
 };
