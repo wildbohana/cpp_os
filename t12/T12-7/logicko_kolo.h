@@ -23,6 +23,4 @@ void izvrsiXOR(cit a_pocetak, cit a_kraj, cit b_pocetak, vector<int>::iterator r
 		*rez = *a_pocetak ^ *b_pocetak;
 }
 
-// *rez = *a_pocetak & *b_pocetak
-
 #endif // LOGICKO_KOLO_H
