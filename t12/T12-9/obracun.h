@@ -16,15 +16,13 @@ void obracunajUkupno(list<string> kupljeno, map<string, double> cenovnik, double
 	for (; spisak != kupljeno.cend(); spisak++)
 		ukupno += cenovnik[*spisak];
 }
-// malo duza varijanta
 
+// malo duza varijanta
 /*
 void obracunajUkupno(list<string> kupljeno, map<string, double> cenovnik, double& ukupno)
 {
     for (auto it = kupljeno.cbegin(); it != kupljeno.cend(); it++)
         for (auto jt = cenovnik.cbegin(); jt != cenovnik.cend(); jt++)
-			// ako pronadjemo cenu, dodamo je na zbir i vracamo se nazad
-			// nema potrebe prolaziti kroz celu mapu ako smo vec pronasli cenu
             if (*it == jt -> first) 
 			{
                 ukupno += jt -> second;
