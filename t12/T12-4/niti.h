@@ -5,6 +5,8 @@
 #include <vector>
 #include <algorithm>
 
+#include <math.h>
+
 #include "pretraga.h"
 
 using namespace std;
@@ -20,27 +22,25 @@ Povratna vrednost je nađeni element, najbliži nuli od svih elemenata koji su o
 // Implementirati ...
 double izracunaj(vector<double> ulaz)
 {
-    thread niti[3];
-    const unsigned segment = ulaz.size() / 3;
-    double najblizi[3];
+	double temp[3];
 
-	// ne zaboravi ref kod najblizi[x]
-    niti[0] = thread(pretrazi, ulaz.cbegin(), ulaz.cbegin() + segment, ref(najblizi[0]));
-    niti[1] = thread(pretrazi, ulaz.cbegin() + segment, ulaz.cbegin() + 2 * segment, ref(najblizi[1]));
-    niti[2] = thread(pretrazi, ulaz.cbegin() + 2 * segment, ulaz.cend(), ref(najblizi[2]));
+	int segment = ulaz.size() / 3;
 
-    niti[0].join();
-    niti[1].join();
-    niti[2].join();
+	thread t1(pretrazi, ulaz.cbegin(), ulaz.cbegin() + segment, ref(temp[0]));
+	thread t2(pretrazi, ulaz.cbegin() + segment, ulaz.cbegin() + 2* segment, ref(temp[1]));
+	thread t3(pretrazi, ulaz.cbegin() + 2 * segment, ulaz.cend(), ref(temp[2]));
 
-    double min = abs(najblizi[0]);
+	t1.join();
+	t2.join();
+	t3.join();
 
-	// i = 1, i = 2 (za 0 smo vec "proverili")
-    for (int i = 1; i < 3; i++)
-        if (najblizi[i] < min)
-            min = abs(najblizi[i]);
+	double retVal = temp[0];
+	
+	for (int i = 1; i < 3; i++)
+		if (abs(temp[i]) < abs(retVal))
+			retVal = temp[i];
 
-    return min;
+	return retVal;
 }
 
 #endif // NITI_H
