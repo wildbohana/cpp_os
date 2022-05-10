@@ -17,13 +17,12 @@ brojNiti - Broj niti koje je potrebno startovati
 // Implementirati ...
 map<string, string> izracunaj(map<string, string> engSrp)
 {
-    map<string, string> srpEng;
+	map<string, string> srpEng;
 
-	// ne zaboravi ref !!!
-    thread nit(napraviRecnik, engSrp, ref(srpEng));
-    nit.join();
+	thread t(napraviRecnik, engSrp, ref(srpEng));
+	t.join();
 
-    return srpEng;
+	return srpEng;
 }
 
 #endif // NITI_H
