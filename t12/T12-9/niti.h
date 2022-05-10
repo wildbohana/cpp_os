@@ -12,11 +12,10 @@ double izracunaj(list<string> kupljeno, map<string, double> cenovnik)
 {
     double racun = 0;
 
-	// ne zaboravi ref !!!
-    thread nit(obracunajUkupno, kupljeno, cenovnik, ref(racun));
-    nit.join();
+	thread t(obracunajUkupno, kupljeno, cenovnik, ref(racun));
+	t.join();
 
-    return racun;
+	return racun;
 }
 
 #endif // NITI_H
