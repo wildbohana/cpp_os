@@ -10,12 +10,12 @@ using namespace std;
 // Implementirati ...
 map<string, double> izracunaj(map<string, double>& a, map<string, double>& b)
 {
-    map<string, double> novi;
+    map<string, double> jeftino;
 
-    thread nit(nadjiPovoljno, a, b, ref(novi));
-    nit.join();
+	thread t(nadjiPovoljno, a, b, ref(jeftino));
+	t.join();
 
-    return novi;
+	return jeftino;
 }
 
 #endif // NITI_H
