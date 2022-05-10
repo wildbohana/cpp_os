@@ -21,12 +21,12 @@ Povratna vrednost treba da bude reč suprotnog značenja (ako je pronađena)
 // Implementirati ...
 string izracunaj(map<string, string> recnik, string rec)
 {
-    string antonim;
+	string antonim;
 
-    thread nit(nadjiAntonim, recnik, rec, ref(antonim));
-    nit.join();
+	thread t(nadjiAntonim, recnik, rec, ref(antonim));
+	t.join();
 
-    return antonim;
+	return antonim;
 }
 
 
