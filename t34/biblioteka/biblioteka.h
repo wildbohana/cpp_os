@@ -12,10 +12,10 @@ class Biblioteka
 {
 	private:
 		Primerak& primerak;
-		// Dodato:
 		mutex m;
-	    condition_variable cv;
-	    int slobodnihPrimeraka;
+		condition_variable cv;
+		int slobodnihPrimeraka;
+		
 	public:
 		// Prosiriti po potrebi ...
 		Biblioteka(Primerak& pr, int br) : primerak(pr) 
@@ -23,41 +23,35 @@ class Biblioteka
 			slobodnihPrimeraka = br;
 		}
 
-		/*
-		Metoda koju poziva nit koja simulira korisnika biblioteke kada on zeli da iznajmi knjigu.
-		Metoda je blokirajuca - ukoliko nema slobodnih primeraka knjige, stajace u stanju cekanja dok se neki ne oslobodi.
+		// Metoda koju poziva nit koja simulira korisnika biblioteke kada on zeli da iznajmi knjigu.
+		// Metoda je blokirajuca - ukoliko nema slobodnih primeraka knjige, stajace u stanju cekanja dok se neki ne oslobodi.
+		//
+		// rbr - Redni broj clana
+		//
+		// Potrebno je pozvati metodu primerak.ceka kada nema slobodnih primeraka knjige.
+		// Potrebno je pozvati metodu primerak.iznajmljen kada ima slobodnih primeraka knjige.
 		
-		rbr - Redni broj clana
-		
-		Potrebno je pozvati metodu primerak.ceka kada nema slobodnih primeraka knjige.
-		Potrebno je pozvati metodu primerak.iznajmljen kada ima slobodnih primeraka knjige.
-		*/
-
 		// Implementirati ...
 		void iznajmi(int rbr) 
 		{
 			unique_lock<mutex> l(m);
 
-			// ako nema slobodnih primeraka - cekaj
 			while (slobodnihPrimeraka == 0)
 			{
 				primerak.ceka(rbr);
 				cv.wait(l);
 			}
 
-			// ako ih ima - iznajmi primerak
-			primerak.iznajmljen(rbr);
 			slobodnihPrimeraka--;
+			primerak.iznajmljen(rbr);
 		}
 
-		/*
-		Metoda koju poziva nit koja simulira korisnika biblioteke kada on zeli da vrati knjigu koju je prethodno iznajmio.
+		// Metoda koju poziva nit koja simulira korisnika biblioteke kada on zeli da vrati knjigu koju je prethodno iznajmio.
+		//
+		// rbr - Redni broj clana
+		//
+		// Potrebno je pozvati metodu primerak.vracen kada je primerak vracen u biblioteku.
 		
-		rbr - Redni broj clana
-		
-		Potrebno je pozvati metodu primerak.vracen kada je primerak vracen u biblioteku.
-		*/
-
 		// Implementirati ...
 		void vrati(int rbr) 
 		{
@@ -65,6 +59,7 @@ class Biblioteka
 
 			slobodnihPrimeraka++;
 			primerak.vracen(rbr);
+
 			cv.notify_one();
 		}
 };
