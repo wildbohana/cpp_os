@@ -7,8 +7,8 @@
 using namespace std;
 
 /*
-Funkcija koja će biti iskorišćena kao funkcija niti - u zadatom rečniku (
-parametar "recnik") pronaći suprotnu reč (antonim) od zadate reči "rec"
+Funkcija koja će biti iskorišćena kao funkcija niti - u zadatom rečniku 
+(parametar "recnik") pronaći suprotnu reč (antonim) od zadate reči "rec"
 
 recnik   - Rečnik koji sadrži parove reč - reč suprotnog značenja
 rec      - Reč za koju se traži reč suprotnog značenja
@@ -17,33 +17,33 @@ ovde treba da se upiše prazan string)
 */
 
 // Dodato:
-typedef map<string, string>::const_iterator cit;
+typedef map<string, string>::const_iterator ci;
 
 // Implementirati ...
 void nadjiAntonim(map<string, string> recnik, string rec, string& rezultat)
 {
-    // pretraga po kljcu
-    for (cit it = recnik.cbegin(); it != recnik.cend(); it++) 
+	// po kljucu
+	for (ci a_begin = recnik.begin(); a_begin != recnik.end(); a_begin++)
 	{
-        if (it -> first == rec) 
+		if (a_begin->first == rec)
 		{
-            rezultat = it -> second;
-            return;
-        }
-    }
+			rezultat = a_begin->second;
+			return;
+		}
+	}
 
-	// pretraga po vrednosti
-    for (cit it = recnik.cbegin(); it != recnik.cend(); it++) 
+	// po vrednosti
+	for (ci a_begin = recnik.begin(); a_begin != recnik.end(); a_begin++)
 	{
-        if (it -> second == rec) 
+		if (a_begin->second == rec)
 		{
-            rezultat = it -> first;
-            return;
-        }
-    }
+			rezultat = a_begin->first;
+			return;
+		}
+	}
 
-	// do ovog dela ce doci samo ako ne pronadje rec -> vraca prazan string
-    rezultat = ""; 
+	// do ovog dela će doći samo ako ne pronađe reč
+    rezultat = "";
 }
 
 #endif // ANTONIM_H
