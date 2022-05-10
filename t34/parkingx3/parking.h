@@ -25,14 +25,16 @@ class Parking
 			slobodan = true;
 		}
 
-		// Metoda koju poziva nit koja simulira kretanje automobila kada on pokusava da udje na parking.
-		// Metoda je blokirajuca - ukoliko nema slobodnog mesta, izvrsenje je u blokadi dok se ono ne oslobodi.
-		//
-		// rbr  - Redni broj automobila
-		// ulaz - Ulaz na koji automobil pokusava da udje
-		//
-		// Potrebno je pozvati metodu automobil.ceka kada automobil ne moze da pridje parkingu i mora da ceka.
-		// Potrebno je pozvati metodu automobil.zauzima kada automobil zauzme parking mesto.
+		/*
+		Metoda koju poziva nit koja simulira kretanje automobila kada on pokusava da udje na parking.
+		Metoda je blokirajuca - ukoliko nema slobodnog mesta, izvrsenje je u blokadi dok se ono ne oslobodi.
+		
+		rbr  - Redni broj automobila
+		ulaz - Ulaz na koji automobil pokusava da udje
+		
+		Potrebno je pozvati metodu automobil.ceka kada automobil ne moze da pridje parkingu i mora da ceka.
+		Potrebno je pozvati metodu automobil.zauzima kada automobil zauzme parking mesto.
+		*/
 		
 		// Implementirati ...
 		void udji(int rbr, int ulaz) 
@@ -51,11 +53,13 @@ class Parking
 			trenutni_ulaz = (trenutni_ulaz + 1) % 3;
 		}
 
-		// Metoda koju poziva nit koja simulira kretanje automobila kada on napusta parking na koji je prethodno usao.
-		//
-		// rbr  - Redni broj automobila
-		//
-		// Potrebno je pozvati metodu automobil.napusta kada automobil napusti parking mesto.
+		/*
+		Metoda koju poziva nit koja simulira kretanje automobila kada on napusta parking na koji je prethodno usao.
+		
+		rbr  - Redni broj automobila
+		
+		Potrebno je pozvati metodu automobil.napusta kada automobil napusti parking mesto.
+		*/
 		
 		// Implementirati ...
 		void izadji(int rbr) 
