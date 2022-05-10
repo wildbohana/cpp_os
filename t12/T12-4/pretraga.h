@@ -19,11 +19,11 @@ najblizi - Nađeni element, najbliži nuli od svih elemenata koji su obuhvaćeni
 // Implementirati ...
 void pretrazi(vector<double>::const_iterator pocetak, vector<double>::const_iterator kraj, double& najblizi)
 {
-    najblizi = *pocetak;
+	najblizi = *pocetak;
 
-    for (; pocetak != kraj; pocetak++)
-        if (abs(*pocetak) < abs(najblizi))
-            najblizi = *pocetak;
+	for (; pocetak != kraj; pocetak++)
+		if (abs(*pocetak) < abs(najblizi))
+			najblizi = *pocetak;
 }
 
 #endif // PRETRAGA_H
