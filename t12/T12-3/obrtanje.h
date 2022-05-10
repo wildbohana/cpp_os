@@ -14,18 +14,18 @@ izlazna - Rezultujuća lista (biće popunjena elementima u obrnutom redosledu)
 */
 
 // Dodato
-typedef list<int>::const_iterator cit;
+typedef list<int>::const_iterator ci;
 
 // Implementirati ...
 void obrniRedosled(const list<int>& ulazna, list<int>& izlazna)
 {
-    cit it = ulazna.cbegin();
-	cit kraj = ulazna.cend();
-
-	for (; it != kraj; it++)
-		izlazna.push_back(*it);
-
-	izlazna.reverse();
+    ci pocetak = ulazna.cbegin();
+	ci kraj = ulazna.cend();
+	
+	for (; pocetak != kraj; pocetak++)
+	{
+		izlazna.push_front(*pocetak);
+	}
 }
 
 #endif // OBRTANJE_H
