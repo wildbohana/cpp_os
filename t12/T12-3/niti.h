@@ -19,12 +19,12 @@ Rezultat je rezultujuća lista (popunjena elementima u obrnutom redosledu)
 // Implementirati ...
 list<int> izracunaj(const list<int>& ulazna)
 {
-    list<int> izlazna;
+	list<int> rez;
 
-	thread nit(obrniRedosled, ulazna, ref(izlazna));
-	nit.join();
+	thread t(obrniRedosled, ulazna, ref(rez));
+	t.join();
 
-	return izlazna;
+	return rez;
 }
 
 #endif // NITI_H
