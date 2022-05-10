@@ -28,15 +28,17 @@ class Posta
 			uplaceno[1] = 0;
 		}
 
-		// Metoda koju poziva nit koja simulira klijenta kada on uplacuje neki iznos.
-		// Metoda je blokirajuca - ako je salter zauzet, metoda ce stajati blokirana dok se on ne oslobodi.
-		//
-		// rbr   - Redni broj klijenta
-		// svota - Svota koju klijent zeli da uplati
-		//
-		// Potrebno je pozvati metodu klijent.ceka kada su salteri zauzeti i klijent mora da ceka.
-		// Potrebno je pozvati metodu klijent.uplacuje kada klijent stupi na salter i vrsi svoje placanje.
-		// Potrebno je pozvati metodu klijent.napusta kada klijent zavrsi placanje i napusta salter.
+		/*
+		Metoda koju poziva nit koja simulira klijenta kada on uplacuje neki iznos.
+		Metoda je blokirajuca - ako je salter zauzet, metoda ce stajati blokirana dok se on ne oslobodi.
+		
+		rbr   - Redni broj klijenta
+		svota - Svota koju klijent zeli da uplati
+		
+		Potrebno je pozvati metodu klijent.ceka kada su salteri zauzeti i klijent mora da ceka.
+		Potrebno je pozvati metodu klijent.uplacuje kada klijent stupi na salter i vrsi svoje placanje.
+		Potrebno je pozvati metodu klijent.napusta kada klijent zavrsi placanje i napusta salter.
+		*/
 		
 		// Implementirati ...
 		void uplati(int rbr, int svota) 
