@@ -18,24 +18,24 @@ Rezultat izvršavanja treba da bude vector<int> koji sadrži rezultat sabiranja 
 */
 
 // Dodato:
-typedef vector<int>::const_iterator cit;
+typedef vector<int>::const_iterator ci;
 
 // Implementirati ...
 vector<int> izracunaj(vector<int>& a, vector<int>& b)
 {
-	vector<int> rez(a.size());
+	int n = a.size();
+	thread niti[n];
 
-	const int BROJ_NITI = a.size();
-	thread niti[BROJ_NITI];
+	vector<int> rez(n);
 
-	cit pocetak_a = a.cbegin();
-	cit pocetak_b = a.cbegin();
-	auto pocetak_c = rez.begin();
+	ci a_pocetak = a.cbegin();
+	ci b_pocetak = b.cbegin();
+	vector<int>::iterator c_pocetak = rez.begin();
 
-	for (int i = 0; i < BROJ_NITI; i++, pocetak_a++, pocetak_b++, pocetak_c++)
-		niti[i] = thread(saberiPar, pocetak_a, pocetak_b, pocetak_c);
+	for (int i = 0; i < n; i++, a_pocetak++, b_pocetak++, c_pocetak++)
+		niti[i] = thread(saberiPar, a_pocetak, b_pocetak, c_pocetak);
 
-	for (int i = 0; i < BROJ_NITI; i++)
+	for (int i = 0; i < n; i++)
 		niti[i].join();
 
 	return rez;
