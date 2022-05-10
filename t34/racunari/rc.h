@@ -32,13 +32,15 @@ class RC
 				slobodan[i] = true;
 		}
 
-		// Metoda koju poziva nit koja simulira studenta kako bi student zauzeo mesto za racunarom.
-		// Ova metoda je blokirajuca - ako nema slobodnih mesta, ona ce cekati dok se neko ne oslobodi.
-		//
-		// rbr - Redni broj studenta
-		//
-		// Potrebno je pozvati metodu student.ceka kada su racunari zauzeti i student mora da ceka.
-		// Potrebno je pozvati metodu student.zauzeo kada student zauzme racunar.
+		/*
+		Metoda koju poziva nit koja simulira studenta kako bi student zauzeo mesto za racunarom.
+		Ova metoda je blokirajuca - ako nema slobodnih mesta, ona ce cekati dok se neko ne oslobodi.
+		
+		rbr - Redni broj studenta
+		
+		Potrebno je pozvati metodu student.ceka kada su racunari zauzeti i student mora da ceka.
+		Potrebno je pozvati metodu student.zauzeo kada student zauzme racunar.
+		*/
 		
 		// Implementirati ...
 		int zauzmi(int rbr) 
@@ -67,12 +69,14 @@ class RC
 			return id;	
 		}
 
-		// Metoda koju poziva nit koja simulira studenta kako bi oslobodio racunar koji je prethodno zauzeo.
-		//
-		// rbr         - Redni broj studenta
-		// id_racunara - Redni broj racunara kojeg student oslobadja (prethodno je zauzeo taj racunar)
-		//
-		// Potrebno je pozvati metodu student.oslobodio kada student oslobodi racunar.
+		/*
+		Metoda koju poziva nit koja simulira studenta kako bi oslobodio racunar koji je prethodno zauzeo.
+		
+		rbr         - Redni broj studenta
+		id_racunara - Redni broj racunara kojeg student oslobadja (prethodno je zauzeo taj racunar)
+		
+		Potrebno je pozvati metodu student.oslobodio kada student oslobodi racunar.
+		*/
 		
 		// Implementirati ...
 		void oslobodi(int rbr, int id_racunara) 
