@@ -7,7 +7,7 @@
 using namespace std;
 
 // Dodato:
-typedef map<string, double>::const_iterator cit;
+typedef map<string, double>::const_iterator ci;
 
 // Implementirati ...
 void nadjiPovoljno(map<string, double> a, map<string, double> b, map<string, double> &jeftino)
@@ -18,13 +18,15 @@ void nadjiPovoljno(map<string, double> a, map<string, double> b, map<string, dou
 		jeftino[a_begin->first] = min(a_begin->second, b[a_begin->first]);
 }
 
-// malo duza varijanta
+// first (kljuc) - ime proizvoda
+// seconds (vrednost) - cena proizvoda
 
+// malo duza varijanta
 /*
 void nadjiPovoljno(map<string, double> a, map<string, double> b, map<string, double> &jeftino)
 {
-    for (cit it = a.cbegin(); it != a.cend(); it++)
-        for (cit jt = b.cbegin(); jt != b.cend(); jt++)
+    for (ci it = a.cbegin(); it != a.cend(); it++)
+        for (ci jt = b.cbegin(); jt != b.cend(); jt++)
 			if (it -> first == jt -> first) 
 			{
                 if (it -> second < jt -> second)
@@ -34,8 +36,5 @@ void nadjiPovoljno(map<string, double> a, map<string, double> b, map<string, dou
             }
 }
 */
-
-// first (kljuc) - ime proizvoda
-// seconds (vrednost) - cena proizvoda
 
 #endif // CENOVNIK_H
