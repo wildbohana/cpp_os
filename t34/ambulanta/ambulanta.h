@@ -24,14 +24,16 @@ class Studentska_ambulanta
 			brojSlobodnih[1] = zenskih;
 		}
 
-		// Metoda koju poziva nit koja simulira studenta u ambulanti kada student pokusava da udje u nju.
-		// Ukoliko je ambulanta zauzeta, izvrsenje ove metode ce cekati da se ona oslobodi.
-		//
-		// rbr - Redni broj studenta
-		// p   - Pol studenta
-		//
-		// Potrebno je pozvati metodu student.ceka kada student ne moze da stupi u ambulantu.
-		// Potrebno je pozvati metodu student.ulazi kada student udje u ambulantu.
+		/*
+		Metoda koju poziva nit koja simulira studenta u ambulanti kada student pokusava da udje u nju.
+		Ukoliko je ambulanta zauzeta, izvrsenje ove metode ce cekati da se ona oslobodi.
+		
+		rbr - Redni broj studenta
+		p   - Pol studenta
+		
+		Potrebno je pozvati metodu student.ceka kada student ne moze da stupi u ambulantu.
+		Potrebno je pozvati metodu student.ulazi kada student udje u ambulantu.
+		*/
 
 		// Implementirati ...
 		void udji(int rbr, Pol p) 
