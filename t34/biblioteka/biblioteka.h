@@ -23,13 +23,15 @@ class Biblioteka
 			slobodnihPrimeraka = br;
 		}
 
-		// Metoda koju poziva nit koja simulira korisnika biblioteke kada on zeli da iznajmi knjigu.
-		// Metoda je blokirajuca - ukoliko nema slobodnih primeraka knjige, stajace u stanju cekanja dok se neki ne oslobodi.
-		//
-		// rbr - Redni broj clana
-		//
-		// Potrebno je pozvati metodu primerak.ceka kada nema slobodnih primeraka knjige.
-		// Potrebno je pozvati metodu primerak.iznajmljen kada ima slobodnih primeraka knjige.
+		/*
+		Metoda koju poziva nit koja simulira korisnika biblioteke kada on zeli da iznajmi knjigu.
+		Metoda je blokirajuca - ukoliko nema slobodnih primeraka knjige, stajace u stanju cekanja dok se neki ne oslobodi.
+		
+		rbr - Redni broj clana
+		
+		Potrebno je pozvati metodu primerak.ceka kada nema slobodnih primeraka knjige.
+		Potrebno je pozvati metodu primerak.iznajmljen kada ima slobodnih primeraka knjige.
+		*/
 		
 		// Implementirati ...
 		void iznajmi(int rbr) 
@@ -46,11 +48,13 @@ class Biblioteka
 			primerak.iznajmljen(rbr);
 		}
 
-		// Metoda koju poziva nit koja simulira korisnika biblioteke kada on zeli da vrati knjigu koju je prethodno iznajmio.
-		//
-		// rbr - Redni broj clana
-		//
-		// Potrebno je pozvati metodu primerak.vracen kada je primerak vracen u biblioteku.
+		/*
+		Metoda koju poziva nit koja simulira korisnika biblioteke kada on zeli da vrati knjigu koju je prethodno iznajmio.
+		
+		rbr - Redni broj clana
+		
+		Potrebno je pozvati metodu primerak.vracen kada je primerak vracen u biblioteku.
+		*/
 		
 		// Implementirati ...
 		void vrati(int rbr) 
