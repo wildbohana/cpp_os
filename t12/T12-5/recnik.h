@@ -16,12 +16,10 @@ srpEng - Srpsko-engleski rečnik (ključ je reč na srpskom, podatak je njen pre
 // Implementirati ...
 void napraviRecnik(map<string, string> engSrp, map<string, string>& srpEng)
 {
-    auto it_eng_srp = engSrp.cbegin();
+	map<string, string>::const_iterator rec = engSrp.cbegin();
 
-	// insert - sluzi za ubacivanje u recnik
-	// sta je bilo first, sad je second i obrnuto
-    for (; it_eng_srp != engSrp.cend(); it_eng_srp++)
-       srpEng.insert({it_eng_srp -> second, it_eng_srp -> first});
+	for (; rec != engSrp.cend(); rec++)
+		srpEng.insert({rec->second, rec->first});
 }
 
 
