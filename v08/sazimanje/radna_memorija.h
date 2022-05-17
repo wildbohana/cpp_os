@@ -10,12 +10,20 @@ class Radna_memorija
 {
 	private:
 		Dijagnostika& dijagnostika;
+		mutex m;
+		condition_variable cv, cvs;
+		vector<int> mem;
+		int ukupno_okvira;
+		int slobodno_okvira;
+		bool sazeto;
 
 	public:
 		// Proširiti po potrebi ...
-		Radna_memorija(Dijagnostika& d, int ukupno_lokacija) : dijagnostika(d) 
+		Radna_memorija(Dijagnostika& d, int ukupno_lokacija) : dijagnostika(d), ukupno_okvira(ukupno_lokacija), slobodno_okvira(ukupno_lokacija) 
 		{
-			
+			unique_lock<mutex> l(m);
+			mem.resize(ukupno_okvira, -1);
+			sazeto = true;
 		}
 
 		Dijagnostika& getDijagnostika() 
@@ -41,7 +49,57 @@ class Radna_memorija
 		// Implementirati ...
 		void koristi(int id_procesa, int br_lokacija_procesa, int trajanje) 
 		{
+			unique_lock<mutex> l(m);
+
+			if (slobodno_okvira < br_lokacija_procesa)
+				dijagnostika.proces_ceka(id_procesa);
 			
+
+			while (slobodno_okvira < br_lokacija_procesa || !sazeto)
+				cv.wait(l);
+			
+			int zauzeo = 0;
+			int i = 0;
+			int pocetni = 0;
+
+			while (zauzeo < br_lokacija_procesa && i < ukupno_okvira) 
+			{
+				if (mem[i] == -1) 
+				{
+					if (pocetni == 0) 
+					{
+						pocetni = i;
+					}
+					mem[i] = id_procesa;
+					zauzeo++;
+				}
+				i++;
+			}
+
+			slobodno_okvira -= zauzeo;
+			dijagnostika.proces_zauzeo_okvire(id_procesa, pocetni, pocetni + br_lokacija_procesa);
+			dijagnostika.ispisi_memoriju(mem.begin(), mem.end());
+
+			l.unlock();
+			this_thread::sleep_for(seconds(trajanje));
+			l.lock();
+
+			int oslobodio = 0;
+			for (vector<int>::iterator it = mem.begin(); it != mem.end(); it++) 
+			{
+				if (*it == id_procesa) 
+				{
+					*it = -1;
+					oslobodio++;
+				}
+			}
+
+			slobodno_okvira += oslobodio;
+			dijagnostika.proces_zavrsio(id_procesa);
+			dijagnostika.ispisi_memoriju(mem.begin(), mem.end());
+
+			sazeto = false;
+			cvs.notify_one();
 		}
 
 		/* 
@@ -54,7 +112,37 @@ class Radna_memorija
 		// Implementirati ...
 		void sazimanje() 
 		{
+			unique_lock<mutex> l(m);
+
+			while (sazeto) 
+				cvs.wait(l);
 			
+
+			for (int i = 0; i < ukupno_okvira-1; i++) 
+			{
+				if (mem[i] == -1) 
+				{
+					int j = i;
+					int sh = 1;
+
+					while (mem[j] == -1 && j < ukupno_okvira) 
+					{
+						j++;
+						sh++;
+					}
+
+					if (j < ukupno_okvira) 
+						for (int j = i; j < i+sh; j++) 
+							if (j+sh < ukupno_okvira) 
+							{
+								mem[j] = mem[j+sh];
+								mem[j+sh] = -1;
+							}
+				}
+			}
+
+			sazeto = true;
+			cv.notify_all();
 		}
 };
 
