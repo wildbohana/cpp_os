@@ -9,15 +9,21 @@ class Radna_memorija
 {
 	private:
 		Dijagnostika& dijagnostika;
+		mutex m;
+		condition_variable cv;
+		int ukupno_okvira;
+		int slobodno_okvira;
+		vector<int> mem;
 
 	public:
 		// dijagnostika  - referenca na instancu klase Dijagnostika
 		// ukupno_okvira - ukupan broj okvira u memoriji
 		
 		// Proširiti po potrebi ...
-		Radna_memorija(Dijagnostika& d, int ukupno_okvira) : dijagnostika(d) 
+		Radna_memorija(Dijagnostika& d, int ukupno_okvira) : dijagnostika(d), ukupno_okvira(ukupno_okvira), slobodno_okvira(ukupno_okvira) 
 		{
-			
+			unique_lock<mutex> l(m);
+	        mem.resize(ukupno_okvira, -1);
 		}
 
 		Dijagnostika& getDijagnostika() 
@@ -43,7 +49,33 @@ class Radna_memorija
 		// Implementirati ...
 		void ucitaj(int broj_stranica, int id_procesa) 
 		{
-			
+			unique_lock<mutex> l(m);
+
+			while (slobodno_okvira < broj_stranica)
+			{
+				dijagnostika.proces_ceka(id_procesa);
+				cv.wait(l);
+			}
+
+			dijagnostika.proces_se_izvrsava(id_procesa);
+			int zauzeo = 0;
+			int i = 0;
+
+			vector<int> zauzeti;
+
+			while (zauzeo < broj_stranica && i < ukupno_okvira) 
+			{
+				if (mem[i] == -1) 
+				{
+					mem[i] = id_procesa;
+					zauzeti.push_back(i);
+					zauzeo++;
+				}
+				i++;
+			}
+
+			slobodno_okvira -= zauzeo;
+			dijagnostika.ispisi_okvire(okviri.begin(), okviri.end());
 		}
 
 		/*
@@ -55,7 +87,20 @@ class Radna_memorija
 		// Implementirati ...
 		void oslobodi(int id_procesa) 
 		{
-			
+			// is it really necessary?
+			unique_lock<mutex> l(m);
+
+			int oslobodio = 0;
+
+			for (auto it = mem.begin(); it != mem.end(); it++) 
+				if (*it == id_procesa) 
+				{
+					*it = -1;
+					oslobodio++;
+				}
+
+			slobodno_okvira += oslobodio;
+			cv.notify_all();
 		}
 };
 
