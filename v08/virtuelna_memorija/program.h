@@ -11,12 +11,40 @@ class Program
 {
 	private:
 		Dijagnostika& dijagnostika;
+		mutex m;
+		condition_variable cv_r;
+		condition_variable cv_v;
+		int kolicina;
+		int slobodna;
+		int virtualna;
+		bool zauzmi_vm;
+
+		void zauzmi(int koliko) 
+		{
+			unique_lock<mutex> l(m);
+
+			if (slobodna >= koliko) 
+				slobodna -= koliko;
+			else 
+			{
+				zauzmi_vm = true;
+				kolicina = koliko;
+				cv_v.notify_one();
+
+				while (zauzmi_vm)
+					cv_r.wait(l);
+			}
+
+			// lock i unlock ne smeju da postoje
+			this_thread::sleep_for(seconds(1)); 
+		}
 
 	public:
 		// Proširiti po potrebi ...
-		Program(Dijagnostika& d, int kapacitet) : dijagnostika(d) 
+		Program(Dijagnostika& d, int kapacitet) : dijagnostika(d), slobodna(kapacitet) 
 		{
-			
+			virtualna = 0;
+			kolicina = 0;
 		}
 
 		Dijagnostika& getDijagnostika() 
@@ -34,7 +62,14 @@ class Program
 		// Implementirati ...
 		Povratna_vrednost izvrsi_naredbu(Naredba naredba) 
 		{
-			
+			if (naredba.tip == "repeat") 
+				for (int i = 0; i < naredba.ponavljanja; i++)
+					zauzmi(naredba.kolicina_memorije);
+			else
+				zauzmi(naredba.kolicina_memorije);
+
+			// može i ovako da se vrati
+			return {slobodna, virtualna};
 		}
 
 		/*
@@ -46,7 +81,19 @@ class Program
 		// Implementirati ...
 		int zauzmi_virtuelnu_memoriju() 
 		{
+			unique_lock<mutex> l(m);
+
+			while (!zauzmi_vm)
+				cv_v.wait(l);
 			
+			// lock i unlock ne smeju da postoje
+			this_thread::sleep_for(seconds(1)); 
+			
+			virtualna += kolicina;
+			zauzmi_vm = false;
+
+			cv_r.notify_one();
+			return virtualna;
 		}
 };
 
