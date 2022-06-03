@@ -11,9 +11,7 @@
 using namespace std;
 using namespace chrono;
 
-// Struktura UI zahteva. Neophodna radi efikasne obrade zahteva. Moguće su i drugačije implementacije.
-// Npr. odvojeni redovi čekanja, integera i bool-ova ali je efikasnije spakovati sve u jednu 
-// strukturu i onda date strukture stavljati u red (queue) (preko pokazivača, dinamički alocirane)
+// Struktura UI zahteva
 struct UI_zahtev 
 {
 	condition_variable cv;
@@ -57,16 +55,19 @@ class OS
 		
 		p - Struktura koja sadrži opis procesa (ID procesa i instrukcije koje treba izvršiti)
 		
-		Ukoliko proces ne može da se izvrši (procesor je zauzet), proces mora da se uveže u red spremnih i treba pozvati metodu dijagnostika.proces_ceka.
-		Ukoliko dođe do toga da izvršenje procesa prestaje (dostignut je maksimalan dozvoljen broj uzastopnih STANDARD instrukcija ili su sve instrukcije procesa izvršene), potrebno je pozvati dijagnostika.proces_oslobadja_procesor.
+		Ukoliko proces ne može da se izvrši (procesor je zauzet), proces mora da se uveže u red 
+		spremnih i treba pozvati metodu dijagnostika.proces_ceka. Ukoliko dođe do toga da izvršenje 
+		procesa prestaje (dostignut je maksimalan dozvoljen broj uzastopnih STANDARD instrukcija ili 
+		su sve instrukcije procesa izvršene), potrebno je pozvati dijagnostika.proces_oslobadja_procesor.
 		Kada se izvrši STANDARD instrukcija nekog procesa, potrebno je pozvati dijagnostika.proces_izvrsio_standardnu.
-		Kada se izvršava UI instrukcija, potrebno je pozvati par metoda: dijagnostika.proces_ceka_na_UI kada se pokrene U/I operacija (nakon čega sledi čekanje na U/I podsistem) i dijagnostika.proces_zavrsio_UI kada se završi U/I operacija.
+		Kada se izvršava UI instrukcija, potrebno je pozvati par metoda: 
+		- dijagnostika.proces_ceka_na_UI kada se pokrene U/I operacija (nakon čega sledi čekanje na U/I podsistem) 
+		- dijagnostika.proces_zavrsio_UI kada se završi U/I operacija.
 		*/
 
 		// Implementirati ...
 		void izvrsi_proces(Proces& p) 
 		{
-			// Broj uzastopno izvršenih instrukcija
 			int uzastopnih_instrukcija = 0; 
 
 			for (vector<INS_TYPE>::iterator it = p.instrukcije.begin(); it != p.instrukcije.end(); it++) 
@@ -80,7 +81,6 @@ class OS
 					spremni.wait(l);
 				}
 				
-				// Proces zauzima procesor
 				aktivni_proces = p.id; 
 
 				if (*it == STANDARD) 
@@ -93,8 +93,8 @@ class OS
 					dijagnostika.proces_izvrsio_standardnu(p.id);
 
 					// Ako je izvršen maksimalan broj uzastopnih instrukcija ili su izvršene sve instrukcije procesa:
-					// Oslobodi procesor
-					// Aktiviraj sledeći iz reda spremnih
+					// - oslobodi procesor
+					// - aktiviraj sledeći iz reda spremnih
 					if (++uzastopnih_instrukcija == maks_uzastopnih_instrukcija || it == p.instrukcije.end()-1) 
 					{
 						dijagnostika.proces_oslobadja_procesor(p.id);
@@ -140,7 +140,8 @@ class OS
 		Metoda koju poziva nit koja simulira obrađivač U/I zahteva kako bi se obradili trenutno pohranjeni U/I zahtevi.
 		
 		Potrebno je pozvati dijagnostika.ui_ceka kada ne postoje trenutno pohranjeni U/I zahtevi i obrađivač čeka na prvi.
-		Potrebno je pozvati dijagnostika.ui_zapocinje kada obrađivač krene u obradu U/I zahteva. Kada obrađivač završi taj zahtev, potrebno je pozvati dijagnostika.ui_zavrsio.
+		Potrebno je pozvati dijagnostika.ui_zapocinje kada obrađivač krene u obradu U/I zahteva. 
+		Kada obrađivač završi taj zahtev, potrebno je pozvati dijagnostika.ui_zavrsio.
 		*/
 
 		// Implementirati ...
