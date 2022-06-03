@@ -161,7 +161,7 @@ class Memorija
             return evidencija.end();
         }
 
-		// Dodate metode
+		// Dodate metode:
 		// Nije thread-safe
 		void free(int* p)
 		{
@@ -180,8 +180,8 @@ class Memorija
 		{
             for (auto it = evidencija.begin(); it!= evidencija.end();)
 			{
-				//Dobijemo iterator na sledeću stvar
-				//Zato što ne možemo da napišemo it + 1, morali smo da it povećamo, pa ga posle smanjujemo
+				// Dobijemo iterator na sledeću stvar
+				// Zato što ne možemo da napišemo it + 1, morali smo da it povećamo, pa ga posle smanjujemo
                 auto next = ++it; 
                 it--;
 				
@@ -215,7 +215,7 @@ class Memorija
 		// TODO B Dopuniti po potrebi
         Memorija(int k, Dijagnostika& dd) : d(dd), kapacitet(k), zavrseno(false), doCompaction(false)
 		{
-            // Ma pocetku to je memorija samo jedan odsecak gde je sve slobodno
+            // Na pocetku, memorija je samo jedan odsecak gde je sve slobodno
             Odsecak o = {m: mem, n: k, free: true}; 
     		mem = new int[k];
 		    evidencija.push_front(o);
@@ -264,7 +264,7 @@ class Memorija
             unique_lock<mutex> l(m);
             list<Odsecak>::iterator it;
 			
-			//Nit čeka da bude oslobođena
+			// Nit čeka da bude oslobođena
             while ((it = firstFit(n)) == evidencija.end())
 			{
                 d.stampajPoruku(tag, "Nit ceka..."); 
