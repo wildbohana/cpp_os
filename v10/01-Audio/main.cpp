@@ -135,7 +135,7 @@ class Dijagnostika
                 cout << s->data[i] << endl;
         }
 
-        // sluzi za debagovanje
+        // Služi za debagovanje
         void stampajPoruku(const char* tag, const char* msg)
 		{
             unique_lock<mutex> l(m);
@@ -184,7 +184,7 @@ class Bafer
             freeMap[i] = true; 
         }
 		
-		// Mije thread-safe
+		// Nije thread-safe
         void loadInternal(Sample& out)
 		{
             int i = index.front();
