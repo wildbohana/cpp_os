@@ -16,10 +16,8 @@ class Memorija
 	private:
 		Dijagnostika& dijagnostika;
 		
-		// Veličina reči je 4 bajta
 	    const int VELICINA_RECI = 4;
 		
-		// Struktura koja predstavlja opis trenutnih pristupa jednoj memorijskoj reči
 		struct Pristup 
 		{                        
 			Stanje stanje; 
@@ -28,7 +26,6 @@ class Memorija
 			condition_variable citanje;
 			condition_variable upis; 
 
-			// Na početku stanje slobodno i nema čitača i pisača
 			Pristup() : stanje(SLOBODAN), aktivnih_citaca(0), citaca_ceka(0) {} 
     	};    
 
@@ -78,9 +75,9 @@ class Memorija
 			unique_lock<mutex> l(m);
 			
 			// Dok god je stanje date reči takvo da neko trenutno piše u nju:
-			// povećaj broj onih koji žele da čitaju iz reči
-			// čekaj na signal za dozvolu čitanja iz reči
-			// smanji broj onih koji žele da čitaju iz reči
+			// - povećaj broj onih koji žele da čitaju iz reči
+			// - čekaj na signal za dozvolu čitanja iz reči
+			// - smanji broj onih koji žele da čitaju iz reči
 			while (pristupi[rec]->stanje == UPIS) 
 			{
 				(pristupi[rec]->citaca_ceka)++;
@@ -89,7 +86,7 @@ class Memorija
 				(pristupi[rec]->citaca_ceka)--;
 			}
 
-			// Povecaj broj aktivnih čitaca i prebaci stanje reči u to da se ona čita
+			// Povećaj broj aktivnih čitaca i prebaci stanje reči u to da se ona čita
 			(pristupi[rec]->aktivnih_citaca)++;
 			pristupi[rec]->stanje = CITANJE;
 
@@ -99,8 +96,6 @@ class Memorija
 			l.lock();
 			
 			// Ako nema više aktivnih čitača, TEK TADA može obavestiti pisače
-			// Efektivno ovo daje veći prioritet čitačima
-			// Oslobađa datu reč
 			if (--(pristupi[rec]->aktivnih_citaca) == 0) 
 			{ 
 				pristupi[rec]->upis.notify_one();
@@ -140,24 +135,21 @@ class Memorija
 				pristupi[rec]->upis.wait(l);
 			}
 			
-			// Stanje se menja u upis
 			pristupi[rec]->stanje = UPIS;               
 
 			l.unlock();
 			this_thread::sleep_for(seconds(1));
 			l.lock();
 			
-			// Stanje nakon upisa je slobodno
 			pristupi[rec]->stanje = SLOBODAN;    
 
-			// Nova vrednost se upisuje u adresu. Obratiti pažnju da se ovo radi tek
-			// nakon sleep-a. Konzistentnost se ne narušava jer nit koja upisuje drži propusnicu
+			// Nova vrednost se upisuje u adresu. Obratiti pažnju da se ovo radi tek nakon sleep-a
 			mem[adresa] = vrednost;                     
 
 			dijagnostika.proces_upisao(rbp, adresa, vrednost);
 		
-			// Dok god ima čitača koji čekaju, obavesti ih SVE da mogu da čitaju. Ovo je
-			// zato što više čitača smeju da čitaju istovremeno
+			// Dok god ima čitača koji čekaju, obavesti ih SVE da mogu da čitaju
+			// Ovo je zato što više čitača smeju da čitaju istovremeno
 			// Ako nema čitača, obavesti pisače da mogu vršiti upis (ako ih ima naravno)
 			if (pristupi[rec]->citaca_ceka != 0)        
 				pristupi[rec]->citanje.notify_all();    
