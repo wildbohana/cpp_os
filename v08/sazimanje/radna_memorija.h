@@ -14,7 +14,7 @@ class Radna_memorija
 {
 	private:
 		Dijagnostika& dijagnostika;
-		// Indeksi su indeksi lokacija a elementi su identifikatori procesa koji ih koriste
+		// Indeksi su indeksi lokacija, a elementi su identifikatori procesa koji ih koriste
 		vector<int> lokacije; 
 		mutex m;
 		bool aktiviraj_sazimanje;
@@ -89,7 +89,7 @@ class Radna_memorija
 			unique_lock<mutex> l(m);
 			int pocetak;
 			
-			// Ako nema dovoljno slobodnih uzastopnih okvira
+			// Ako nema dovoljno slobodnih uzastopnih okvira, proces čeka
 			while ((pocetak = pocetak_bloka(br_lokacija_procesa)) == -1) 
 			{
 				dijagnostika.proces_ceka(id_procesa);
@@ -139,9 +139,8 @@ class Radna_memorija
 			while (!aktiviraj_sazimanje && !kraj) 
 				cv_sazimanje.wait(l);
 			
-			// Ako je kraj izvršavanja, nit se šalje u sleep
-			// Ovo se radi da uslovna promenljiva ne bi ostala u čekanju
-			// Zato što bi to blokiralo uništavanje objekta i onemogućilo program da se završi
+			// Ako je kraj izvršavanja, nit se šalje u sleep. Ovo se radi da uslovna promenljiva ne bi ostala u čekanju
+			// zato što bi to blokiralo uništavanje objekta i onemogućilo program da se završi
 			while (kraj) 
 				this_thread::sleep_for(seconds(1)); 
 													
@@ -151,11 +150,9 @@ class Radna_memorija
 			// Stvori novi vektor iste dužine kao stari
 			vector<int> kopija;    
 			kopija.resize(lokacije.size(), -1);
-
 			
 			// Kopiraj korišćene lokacije iz starog u novi vektor, na početak
 			int a = 0;
-
 			for (int i = 0; i < lokacije.size(); i++) 
 			{
 				if (lokacije[i] != -1)
@@ -168,7 +165,7 @@ class Radna_memorija
 			dijagnostika.sazimanje_obavljeno();
 			dijagnostika.ispisi_memoriju(lokacije.begin(), lokacije.end());
 			
-			// Javi svima jer je moguce da ima dovoljno memorije za vise procesa sada
+			// Javi svima jer je moguce da sada ima dovoljno memorije za vise procesa
 			cv_slobodno.notify_all();  
 		}
 
