@@ -10,7 +10,7 @@
 using namespace std;
 using namespace chrono;
 
-// Struktura UI zahteva. Istovetna kao kod zadatka 02-procesi u vezbama 09 procesi.
+// Struktura UI zahteva
 struct UI_zahtev 
 {
 	condition_variable cv;
@@ -23,9 +23,8 @@ struct UI_zahtev
 class OS 
 {
 	private:
-		Dijagnostika& dijagnostika;
-		
-		// red POKAZIVAČA na UI zahteve. Neophodno je ovako jer CV unutar zahteva ne moze da se kopira.
+		Dijagnostika& dijagnostika;	
+		// Red POKAZIVAČA na UI zahteve. Neophodno je ovako jer CV unutar zahteva ne moze da se kopira.
 		queue<UI_zahtev*> zahtevi;   
 		mutex m;
 		condition_variable ui;
@@ -49,7 +48,9 @@ class OS
 		id_procesa - ID procesa koji upućuje zahtev
 		broj_staze - broj staze diska kojoj nit želi da pristupi
 		
-		Metoda treba da formira novi zahtev i uputi ga U/I uređaju na obradu. Proces će biti blokiran dok god se ovaj zahtev ne izvrši. Pre nego što stupi u blokadu, potrebno je pozvati dijagnostika.proces_ceka.
+		Metoda treba da formira novi zahtev i uputi ga U/I uređaju na obradu. 
+		Proces će biti blokiran dok god se ovaj zahtev ne izvrši. 
+		Pre nego što stupi u blokadu, potrebno je pozvati dijagnostika.proces_ceka.
 		*/
 
 		// Implementirati ...
@@ -63,7 +64,7 @@ class OS
 			zahtevi.push(z);
 			ui.notify_one();
 			
-			// Dok god zahtev nije obrađen, čeka se na ovom mestu
+			// Dokle god zahtev nije obrađen, čeka se na ovom mestu
 			while (!z->obradjen) 
 			{
 				dijagnostika.proces_ceka(id_procesa, broj_staze);
