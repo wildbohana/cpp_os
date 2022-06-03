@@ -49,14 +49,12 @@ class Procesor {
 			{
 				unique_lock<mutex> l(m);
 				
-				// Čekanje na procesor u redu spremnih dok god neki drugi proces radi
 				while (procesor_zauzet) 
 				{
 					cv_procesi.wait(l);
 					dijagnostika.proces_ceka(id);
 				}
 				
-				// Zauzimanje procesora
 				procesor_zauzet = true;
 				dijagnostika.proces_izvrsava(id, i);
 
