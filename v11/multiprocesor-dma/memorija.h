@@ -31,7 +31,7 @@ class Memorija {
 		// Implementirati ...
 		void pisi(int adresa, char vrednost) 
 		{
-			// Radi očuvanja konzistentnosti memorijske lokacije. Obratiti pažnju na razliku u odnosu na rešenje u zadatku "multiprocesor" --
+			// Radi očuvanja konzistentnosti memorijske lokacije. Obratiti pažnju na razliku u odnosu na rešenje u zadatku "multiprocesor"
 			// Ovde nema provere stanja, brojača... Sva sinhronizacija se vrši na nivou Magistrala-a (magistrale tj. sabirnice).
 			unique_lock<mutex> l(m);
 			this_thread::sleep_for(chrono::milliseconds(300));
