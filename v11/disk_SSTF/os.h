@@ -10,7 +10,7 @@
 using namespace std;
 using namespace chrono;
 
-// Struktura UI zahteva. Istovetna kao kod zadatka 02-procesi u vezbama 09 procesi.
+// Struktura UI zahteva
 struct UI_zahtev 
 {
 	condition_variable cv;
@@ -24,7 +24,6 @@ class OS
 {
 	private:
 		Dijagnostika& dijagnostika;
-		
 		// Red pokazivača na UI zahteve. Neophodno je ovako jer CV unutar zahteva ne moze da se kopira.
 		deque<UI_zahtev*> zahtevi;   
 		mutex m;
