@@ -98,12 +98,14 @@ void testirajSve()
 
 	for (int i = 0; i < 5; i++)
 		procesi[i].join();
+
+	OS.zavrsi();
 }
 
 int main() 
 {
     testirajSve();
 	
-	//exit 0 - predstavlja signal detach-ovanoj niti da prekine rad jer više nije neophodna
+	// Signal detach-ovanoj niti da prekine rad jer više nije neophodna
     exit(0);  
 }
