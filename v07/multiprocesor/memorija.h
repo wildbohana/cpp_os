@@ -9,29 +9,31 @@
 using namespace std;
 using namespace chrono;
 
-enum Stanje {SLOBODAN, CITANJE, UPIS };
+enum Stanje {SLOBODAN, CITANJE, UPIS};
+
+// Veličina reči je 4 bajta
+const int VELICINA_RECI = 4;
+
+// Struktura koja predstavlja opis trenutnih pristupa jednoj memorijskoj reči
+struct Pristup 
+{
+	Stanje stanje; 
+	int aktivnih_citaca; 
+	int citaca_ceka;
+	condition_variable citanje;
+	condition_variable upis; 
+
+	// Na početku je stanje slobodno i nema čitača i pisača
+	Pristup() : stanje(SLOBODAN), aktivnih_citaca(0), citaca_ceka(0) {} 
+};    
 
 class Memorija 
 {
 	private:
 		Dijagnostika& dijagnostika;
-		
-	    const int VELICINA_RECI = 4;
-		
-		struct Pristup 
-		{                        
-			Stanje stanje; 
-			int aktivnih_citaca; 
-			int citaca_ceka;
-			condition_variable citanje;
-			condition_variable upis; 
-
-			Pristup() : stanje(SLOBODAN), aktivnih_citaca(0), citaca_ceka(0) {} 
-    	};    
-
-		// Ovo mora ispod Struct-a jer vektor koristi podatke tipa Pristup
 		// Memorija je predstavljena vektorom karaktera
 		// Drugi vektor je vektor pokazivača na strukture koje beleže pristupe datoj reči
+		Pristup pristup;
 		mutex m;
     	vector<char> mem;
     	vector<Pristup*> pristupi;
@@ -41,7 +43,7 @@ class Memorija
 		Memorija(Dijagnostika& d, int bajtova) : dijagnostika(d), mem(bajtova) 
 		{
 			// Broj reči se zaokružuje na viši celi broj
-			// Primer - 10 bajta = 3 reči. Generiše se 3 instance strukture Pristup.
+			// Primer - 10 bajta = 3 reči (12 bajta). Generišu se 3 instance strukture Pristup.
 			int reci = (bajtova + (VELICINA_RECI - 1)) / VELICINA_RECI;    
 			
 			for (int i = 0; i < reci; i++) 
@@ -52,6 +54,7 @@ class Memorija
 		// Pošto su svi pristupi dinamički generisani moraju se u destruktoru i izbrisati
 		~Memorija() 
 		{
+			// vector<Pristup *>::iterator == auto
 			for (auto it = pristupi.begin(); it != pristupi.end(); it++)
 				delete *it;
 		}
@@ -80,13 +83,13 @@ class Memorija
 			// - smanji broj onih koji žele da čitaju iz reči
 			while (pristupi[rec]->stanje == UPIS) 
 			{
+				dijagnostika.proces_ceka_citanje(rbp, adresa);
 				(pristupi[rec]->citaca_ceka)++;
 				pristupi[rec]->citanje.wait(l);
-				dijagnostika.proces_ceka_citanje(rbp, adresa);
 				(pristupi[rec]->citaca_ceka)--;
 			}
 
-			// Povećaj broj aktivnih čitaca i prebaci stanje reči u to da se ona čita
+			// Povecaj broj aktivnih čitaca i prebaci stanje reči u to da se ona čita
 			(pristupi[rec]->aktivnih_citaca)++;
 			pristupi[rec]->stanje = CITANJE;
 
@@ -96,6 +99,8 @@ class Memorija
 			l.lock();
 			
 			// Ako nema više aktivnih čitača, TEK TADA može obavestiti pisače
+			// Efektivno ovo daje veći prioritet čitačima
+			// Oslobađa datu reč
 			if (--(pristupi[rec]->aktivnih_citaca) == 0) 
 			{ 
 				pristupi[rec]->upis.notify_one();
@@ -135,23 +140,27 @@ class Memorija
 				pristupi[rec]->upis.wait(l);
 			}
 			
+			// Stanje se menja u upis
 			pristupi[rec]->stanje = UPIS;               
 
+			// Pisanje traje 1 sekundu
 			l.unlock();
 			this_thread::sleep_for(seconds(1));
 			l.lock();
 			
-			pristupi[rec]->stanje = SLOBODAN;    
-
-			// Nova vrednost se upisuje u adresu. Obratiti pažnju da se ovo radi tek nakon sleep-a
-			mem[adresa] = vrednost;                     
+			// Nova vrednost se upisuje u adresu. Obratiti pažnju da se ovo radi tek
+			// nakon sleep-a. Konzistentnost se ne narušava jer nit koja upisuje drži propusnicu
+			mem[adresa] = vrednost;
+			
+			// Stanje nakon upisa je slobodno
+			pristupi[rec]->stanje = SLOBODAN;
 
 			dijagnostika.proces_upisao(rbp, adresa, vrednost);
 		
-			// Dok god ima čitača koji čekaju, obavesti ih SVE da mogu da čitaju
-			// Ovo je zato što više čitača smeju da čitaju istovremeno
+			// Dok god ima čitača koji čekaju, obavesti ih SVE da mogu da čitaju. Ovo je
+			// zato što više čitača smeju da čitaju istovremeno
 			// Ako nema čitača, obavesti pisače da mogu vršiti upis (ako ih ima naravno)
-			if (pristupi[rec]->citaca_ceka != 0)        
+			if (pristupi[rec]->citaca_ceka)        
 				pristupi[rec]->citanje.notify_all();    
 			else
 				pristupi[rec]->upis.notify_one();       
