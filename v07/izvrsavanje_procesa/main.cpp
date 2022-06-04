@@ -73,6 +73,6 @@ int main()
 {
     testirajSve();
 	
-	// exit 0 - predstavlja signal detach-ovanoj niti da prekine rad
+	// signal detach-ovanoj niti da prekine rad
     exit(0);  
 }
