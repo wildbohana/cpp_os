@@ -14,7 +14,7 @@ class Dijagnostika
 		{
 			cout << "[PROCES] " << id << " ceka kako bi izvrsio citanje sa adrese " << adresa << endl;
 		}
-
+ 
 		// id     - id procesa
 		// adresa - adresa na koju je pokušan upis
 		void proces_ceka_upis(int id, int adresa) 
