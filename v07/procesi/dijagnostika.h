@@ -10,6 +10,7 @@ class Dijagnostika
 {
 	private:
 		mutex term_mx;
+		
 	public:
 		//// Metode koje se odnose na simulaciju procesa: ////
 
