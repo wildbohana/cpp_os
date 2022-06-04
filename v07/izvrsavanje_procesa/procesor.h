@@ -7,12 +7,15 @@
 #include <condition_variable>
 
 using namespace std;
+using namespace chrono;
 
-class Procesor {
+class Procesor 
+{
 	private:
 		Dijagnostika& dijagnostika;
 		mutex m;
-		bool prekid, procesor_zauzet;
+		bool prekid; 
+		bool procesor_zauzet;
 		condition_variable cv_obradjivac_prekida;
 		condition_variable cv_procesi;
 
@@ -49,28 +52,35 @@ class Procesor {
 			{
 				unique_lock<mutex> l(m);
 				
+				// Čekanje na procesor u redu spremnih dok god neki drugi proces radi
 				while (procesor_zauzet) 
 				{
 					cv_procesi.wait(l);
 					dijagnostika.proces_ceka(id);
 				}
 				
+				// Zauzimanje procesora
 				procesor_zauzet = true;
 				dijagnostika.proces_izvrsava(id, i);
 
+				// Obrada procesa
 				l.unlock();
 				this_thread::sleep_for(seconds(1));
 				l.lock();
 
-				dijagnostika.proces_zavrsio(id, i);
+				procesor_zauzet = false;
 
 				// Ako se desio prekid, notifikuje obrađivača prekida. 
-				// U suprotnom, notifikuje naredni proces, jer obrada prekida ima prioritet:
-				procesor_zauzet = false;
+				// U suprotnom, notifikuje se naredni proces, jer obrada prekida ima prioritet:
 				if (prekid)
+				{
 					cv_obradjivac_prekida.notify_one();
+				}
 				else
+				{
 					cv_procesi.notify_one();
+					dijagnostika.proces_zavrsio(id, i);
+				}
 
 				// Odlazi u cooldown, mora se osloboditi propusnica kako bi druge niti mogle pokušati zauzeti procesor:
 				l.unlock();
@@ -94,7 +104,7 @@ class Procesor {
 			
 			// Postavljanje flag-a prekida kako bi procesor mogao da se preključi na obradu
 			prekid = true;
-
+			
 			// Dok god je procesor zauzet, čeka se da ga prethodni proces oslobodi
 			while (procesor_zauzet) 
 			{
@@ -108,15 +118,15 @@ class Procesor {
 
 			// Simulacija obrade prekida
 			l.unlock();
-			this_thread::sleep_for(milliseconds(300));      
+			this_thread::sleep_for(milliseconds(300));
 			l.lock();
 
 			// Kraj obrade prekida, oslobađanje procesora, spuštanje flag-a prekida i
 			// obaveštavanje sledećeg procesa u redu spremnih da preuzme procesor
-			procesor_zauzet = false;                        
+			procesor_zauzet = false;
 			dijagnostika.obradjivac_zavrsio();
 
-			prekid = false;                                 
+			prekid = false;
 			cv_procesi.notify_one();
 		}
 };
