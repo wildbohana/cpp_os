@@ -39,9 +39,9 @@ using namespace chrono;
 // Struktura koja će se koristiti radi formiranja test scenarija:
 struct Pristup_memoriji 
 {
-    Stanje tip_pristupa;                // Tip pristupa memoriji
-    int adresa;                         // Adresa kojoj se pristupa
-    char vrednost;                      // Vrednost koja se upisuje (samo ako je tip pristupa upis u memoriju)
+    Stanje tip_pristupa;
+    int adresa;
+    char vrednost;
     Pristup_memoriji(Stanje tip, int adr, char v = 0) : tip_pristupa(tip), adresa(adr), vrednost(v) {}
 };
 
@@ -49,6 +49,7 @@ struct Pristup_memoriji
 void proces(double pauza, Memorija& mem, const vector<Pristup_memoriji>& pristupi, int rbp) 
 {
     this_thread::sleep_for(duration<double>(pauza));
+	
     for (auto it = pristupi.begin(); it != pristupi.end(); it++) 
 	{
         if (it->tip_pristupa == CITANJE)
@@ -65,6 +66,7 @@ class Test
 		Memorija& memorija;
 		vector<thread*> niti;
 		int rbp;
+
 	public:
 		Test(Memorija& m) : memorija(m), rbp(1) {}
 
