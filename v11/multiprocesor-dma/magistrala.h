@@ -10,20 +10,23 @@ using namespace std;
 using namespace chrono;
 
 
-// Klasa magistrale (sabirnice)
+// Klasa magistrale (sabirnice). 
 // Glavna deljena promenljiva za sinhronizaciju pristupa procesora memoriji i dma kontroleru.
 class Magistrala 
 {
 	public:
-    // Stanja sabirnice - slobodna, čitanje iz memorije, pisanje u memoriju, dma transfer.
-    enum Stanje { SLOBODNA, MEM_CITAJ, MEM_PISI, DMA};
+		// Stanja sabirnice - slobodna, čitanje iz memorije, pisanje u memoriju, dma transfer.
+		// Primetiti sličnost sa stanjima iz zadatka "multiprocesor":
+		enum Stanje { SLOBODNA, MEM_CITAJ, MEM_PISI, DMA};
 
-    // Struktura u koju se beleže parametri DMA transfera: odakle, kome i koliko bajtova se čita ili piše.
-    struct DMA_transfer {
-        int odakle;
-        int koliko;
-        int kome;
-    };
+		// Struktura u koju se beleže parametri DMA transfera.
+		// Odakle, kome i koliko bajtova se čita ili piše.
+		struct DMA_transfer 
+		{
+			int odakle;
+			int koliko;
+			int kome;
+    	};
 
 	private:
 		Dijagnostika& dijagnostika;
@@ -33,7 +36,7 @@ class Magistrala
 		Stanje stanje;
 		condition_variable magistrala_slobodna;
 		condition_variable DMA_kontroler; 
-		// Polje za komunikaciju izmedju dma() i okidac_dma_kontrolera(), struktura
+		 // Polje za komunikaciju izmedju dma() i okidac_dma_kontrolera(), struktura
 		DMA_transfer transfer;
 		bool kraj;
 
@@ -157,6 +160,7 @@ class Magistrala
 		// Implementirati ...
 		void zavrsi() 
 		{
+			unique_lock<mutex> l(m);
 			kraj = true;
 	        DMA_kontroler.notify_one();	
 		}
