@@ -13,9 +13,8 @@ class Radna_memorija
 {
 	private:
 		Dijagnostika& dijagnostika;
-
 		// Evidencija svih okvira u memoriji. Za svaki okvir evidentira se ID procesa 
-		// koji ga trenutno zauzima, ili se postavlja -1 u elementu ako je taj okvir slobodan
+		// koji ga trenutno zauzima ili se postavlja -1 u elementu ako je taj okvir slobodan
 		vector<int> okviri;
 		int slobodnih_okvira;
 		mutex m;
@@ -60,27 +59,27 @@ class Radna_memorija
 		void ucitaj(int broj_stranica, int id_procesa) 
 		{
 			unique_lock<mutex> l(m);
-			
-			// Ako nema dovoljno slobodnih okvira, proces čeka
+
 			while (slobodnih_okvira < broj_stranica) 
 			{
 				dijagnostika.proces_ceka(id_procesa);
 				slobodno.wait(l);
 			}
 			
+			// Ima dovoljno slobodnih okvira
 			// Tražimo slobodne okvire da ih zauzmemo:
 			dijagnostika.proces_se_izvrsava(id_procesa);
 			int proces_zauzeo_okvira = 0;
 
-			// Ako ni jedan proces ne koristi okvir, evidentiramo da se ovaj proces smešta u taj okvir
-			// Ako je zauzeto okvira koliko procesu treba, zauzimanje okvira se prekida
 			for (auto it = okviri.begin(); it != okviri.end(); it++) 
-			{			
+			{
+				// Ako ni jedan proces ne koristi ovaj okvir, evidentiramo da se ovaj proces smešta u okvir
 				if (*it == -1)  
 				{ 
 					*it = id_procesa; 
 					slobodnih_okvira--;
 
+					// Ako je zauzeto okvira koliko procesu treba, zauzimanje okvira se prekida
 					if (++proces_zauzeo_okvira == broj_stranica) break;
 				}
 			}
@@ -98,9 +97,9 @@ class Radna_memorija
 		// Implementirati ...
 		void oslobodi(int id_procesa) 
 		{
-			unique_lock<mutex> l(m);
-			
 			// Prolazi se kroz sve okvire i oslobađaju oni koje je zauzeo ovaj proces:
+			unique_lock<mutex> l(m);
+
 			for (auto it = okviri.begin(); it != okviri.end(); ++it) 
 			{
 				if (*it == id_procesa) 
