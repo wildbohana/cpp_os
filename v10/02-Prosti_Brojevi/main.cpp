@@ -58,6 +58,7 @@ class Dijagnostika
 {
     private:
         mutex m;
+
     public:
         Dijagnostika() {}
         
@@ -121,7 +122,6 @@ class Memorija
     private:
         Dijagnostika& d;
         list<Odsecak> evidencija;
-
 		int kapacitet;
         int* mem;
         mutex m;
@@ -161,11 +161,11 @@ class Memorija
             return evidencija.end();
         }
 
-		// Dodate metode:
+		// Dodate metode
 		// Nije thread-safe
 		void free(int* p)
 		{
-            for (auto it = evidencija.begin(); it!= evidencija.end(); it++)
+            for (auto it = evidencija.begin(); it != evidencija.end(); it++)
 			{
                 if (it->m == p)
 				{
@@ -180,8 +180,8 @@ class Memorija
 		{
             for (auto it = evidencija.begin(); it!= evidencija.end();)
 			{
-				// Dobijemo iterator na sledeću stvar
-				// Zato što ne možemo da napišemo it + 1, morali smo da it povećamo, pa ga posle smanjujemo
+				//Dobijemo iterator na sledeću stvar
+				//Zato što ne možemo da napišemo it + 1, morali smo da it povećamo, pa ga posle smanjujemo
                 auto next = ++it; 
                 it--;
 				
@@ -215,9 +215,9 @@ class Memorija
 		// TODO B Dopuniti po potrebi
         Memorija(int k, Dijagnostika& dd) : d(dd), kapacitet(k), zavrseno(false), doCompaction(false)
 		{
-            // Na pocetku, memorija je samo jedan odsecak gde je sve slobodno
-            Odsecak o = {m: mem, n: k, free: true}; 
-    		mem = new int[k];
+            // Ma pocetku to je memorija samo jedan odsecak gde je sve slobodno
+            mem = new int[k];
+			Odsecak o = {m: mem, n: k, free: true}; 
 		    evidencija.push_front(o);
         }
 		
@@ -379,7 +379,8 @@ TODO C Napisati telo timerThread funkcije koja predstavlja telo tajmer niti tako
 se svakih deset sekundi inicira kompakcija memorije i tako da se timerThread nit moze
 ugasiti spolja kroz manipulaciju 'active' promenljivom. 
 */
-void timerThread(Memorija& mem, bool& active){
+void timerThread(Memorija& mem, bool& active)
+{
     do {
         this_thread::sleep_for(seconds(10));
         mem.initiateCompaction();
@@ -409,7 +410,7 @@ void testirajA(Dijagnostika& d)
     }
 
     // Join osam niti
-	for(int i = 0; i < 8; i++) t[i].join();
+	for (int i = 0; i < 8; i++) t[i].join();
 
     d.stampajRezultate("TEST1", 1024, mem);
     delete [] mem;
@@ -427,10 +428,10 @@ void testirajB(Memorija& mem)
 {
     char tags[10][10];
 
-	// Nit od 10 niti
+	// Niz od 10 niti
     thread t[10];
 
-    for (int i = 0; i < 10;i++)
+    for (int i = 0; i < 10; i++)
 	{
         sprintf(tags[i], "BTEST_%d", i);
         int n = rand() % 6 + 1;
@@ -470,7 +471,7 @@ void testirajC(Memorija& mem)
 
     bool runTimer = true;
 
-	// Pravljenje detach-ovanje niti
+	// Pravljenje detach-ovane niti
 	thread timer(timerThread, ref(mem), ref(runTimer));
     timer.detach();
 
@@ -494,5 +495,6 @@ void testirajSve()
 int main()
 {
     testirajSve();
+	
     return 0; 
 }
