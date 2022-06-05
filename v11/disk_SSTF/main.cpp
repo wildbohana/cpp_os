@@ -34,6 +34,7 @@ void rasporedjivac_diska(OS& os)
 	this_thread::sleep_for(milliseconds(200)); 
 
     os.getDijagnostika().uredjaj_aktiviran();
+
 	while (true) 
 	{
 		int broj_staze = os.obradi_zahtev();
@@ -54,6 +55,7 @@ void testirajSve()
 	rasporedjivac_thread.detach();
 
 	thread procesi[9];
+	
 	for (int i = 0; i < 9; i++)
 		procesi[i] = thread(proces, ref(os), brojevi_staza[i], i+1);
 
