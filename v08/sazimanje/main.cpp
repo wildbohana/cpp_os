@@ -90,11 +90,14 @@ void testirajSve()
 		procesi[i].join();
 
     os_thread.detach();
+
+	rm.zavrsi();
 }
 
 int main() 
 {
     testirajSve();
-
-    return 0;
+	
+	//return 0;
+	exit(0);
 }
