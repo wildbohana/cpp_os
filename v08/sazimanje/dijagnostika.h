@@ -11,6 +11,7 @@ class Dijagnostika
 {
 	private:
 		mutex term_mx;
+
 	public:
 		// id_procesa    - id procesa koji čeka
 		void proces_ceka(int id_procesa) 
@@ -59,14 +60,12 @@ class Dijagnostika
 			int c = 0;
 
 			cout << "[MEMORIJA] okviri: {";
-
 			for (vector<int>::iterator it = pocetak; it != kraj; it++) 
 			{
 				if (c++ > 0)
 					cout << " ";
 				cout << *it;
 			}
-
 			cout << "}" << endl;
 		}
 };
