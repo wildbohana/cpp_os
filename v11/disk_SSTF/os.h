@@ -10,7 +10,7 @@
 using namespace std;
 using namespace chrono;
 
-// Struktura UI zahteva
+// Struktura UI zahteva. Istovetna kao kod zadatka 02-procesi u vezbama 09 procesi.
 struct UI_zahtev 
 {
 	condition_variable cv;
@@ -107,6 +107,7 @@ class OS
 			// Javi najblizam zahtevu da je obradjen i izbrisi ga iz deque-a
 			(*najblizi)->obradjen = true;			
 			(*najblizi)->cv.notify_one();
+
 			int ret_val = (*najblizi)->broj_staze;
 			zahtevi.erase(najblizi);
 
@@ -120,6 +121,7 @@ class OS
 		// Implementirati ...
 		void zavrsi() 
 		{
+			unique_lock<mutex> l(m);
 			kraj = true;
 	        ui.notify_one();
 		}
