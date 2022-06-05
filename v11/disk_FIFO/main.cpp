@@ -37,6 +37,7 @@ void rasporedjivac_diska(OS& os)
 	this_thread::sleep_for(milliseconds(200));  
 
 	os.getDijagnostika().uredjaj_aktiviran();
+	
 	while (true) 
 	{
 		int broj_staze = os.obradi_zahtev();
