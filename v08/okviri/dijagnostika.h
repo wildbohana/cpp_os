@@ -56,14 +56,12 @@ class Dijagnostika
 			int c = 0;
 
 			cout << "{";
-
 			for (vector<int>::iterator it = pocetak; it != kraj; it++) 
 			{
 				if (c++ > 0)
 					cout << " ";
 				cout << *it;
 			}
-
 			cout << "}" << endl;
 		}
 };
