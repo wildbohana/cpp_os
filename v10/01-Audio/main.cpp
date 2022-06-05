@@ -135,7 +135,7 @@ class Dijagnostika
                 cout << s->data[i] << endl;
         }
 
-        // Služi za debagovanje
+        // sluzi za debagovanje
         void stampajPoruku(const char* tag, const char* msg)
 		{
             unique_lock<mutex> l(m);
@@ -148,7 +148,6 @@ class Bafer
     private:
 		// TODO B,C Dodati po potrebi prosirenja
         Dijagnostika& d;
-
 		Sample* data;
         bool* freeMap;
         list<int> index; 
@@ -184,7 +183,7 @@ class Bafer
             freeMap[i] = true; 
         }
 		
-		// Nije thread-safe
+		// Mije thread-safe
         void loadInternal(Sample& out)
 		{
             int i = index.front();
@@ -305,7 +304,7 @@ class Bafer
 			{
                 unique_lock<mutex> l(m);
 
-                while(!doPlay && !doZavrsi)
+                while (!doPlay && !doZavrsi)
                     cplay.wait(l);                
                 
                 if (doZavrsi) return;
@@ -339,7 +338,7 @@ class Bafer
                 Sample s; 
                 load(s);
                 d.stampajSample(&s);
-            }
+            }			
         }
 
 		// TODO OPCIONO Ispisuje ceo bafer na ekran u sirovoj formi
@@ -457,7 +456,6 @@ void testirajB(Bafer& b)
     b.dumpBuffer();
 }
 
-
 /*
 TODO C Napraviti ovde telo niti koje sluzi da automatski, tempirano 'pusta' (ispisuje na ekran)
 tekuci uzorak iz bafera svakih 25ms kroz initiatePlay. 
@@ -471,7 +469,7 @@ void timerThread(Bafer& b, bool& active)
     }
 }
 
-//Telo niti za pustanje zvuka
+// Telo niti za pustanje zvuka
 void daemonThread(Bafer& b)
 {
     b.play();
@@ -507,7 +505,6 @@ void testirajC(Bafer& b)
     t3.join();
 
     char x;
-
     do {
         cin >> x;
     } while (x != 'q');
