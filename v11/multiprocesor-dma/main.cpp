@@ -36,12 +36,12 @@ void procesor(Magistrala& magistrala, vector<Naredba>& program, int idp)
 {
     for (auto it = program.begin(); it != program.end(); it++) 
 	{
-        if(it->tip_transfera == Magistrala::MEM_CITAJ) 
+        if (it->tip_transfera == Magistrala::MEM_CITAJ) 
 		{
             it->vrednost = magistrala.citaj_memoriju(it->odakle);
             magistrala.getDijagnostika().procesor_ucitao_iz_memorije(idp, it->odakle, it->vrednost);
         } 
-		else if(it->tip_transfera == Magistrala::MEM_PISI) 
+		else if (it->tip_transfera == Magistrala::MEM_PISI) 
 		{
             magistrala.pisi_u_memoriju(it->kome, it->vrednost);
             magistrala.getDijagnostika().procesor_upisao_u_memoriju(idp, it->kome, it->vrednost);
@@ -61,7 +61,9 @@ void DMA_kontroler(Magistrala& magistrala)
     while (true) 
 	{
         Magistrala::DMA_transfer transfer = magistrala.okidac_dma_kontrolera();
+
 		if (transfer.odakle == -1) break;
+		
         magistrala.getDijagnostika().dma_transfer_obavljen(transfer.odakle, transfer.koliko, transfer.kome);
     }
 }
