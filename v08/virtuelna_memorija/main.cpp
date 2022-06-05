@@ -70,6 +70,8 @@ void testirajSve()
     thread o(os, ref(p));
     i.join();
     o.detach();
+
+	p.zavrsi();
 }
 
 int main() 
