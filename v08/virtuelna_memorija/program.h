@@ -11,10 +11,12 @@
 #include <queue>
 
 using namespace std;
+using namespace chrono;
 
 struct Zahtev 
 {
     public:
+		// Koliko VM je potrebno zauzeti
         int zauzmi;             
         condition_variable cv;
 
@@ -97,13 +99,15 @@ class Program
 		// Implementirati ...
 		Povratna_vrednost izvrsi_naredbu(Naredba naredba) 
 		{
+			// GDE JE UNIQUE LOCK ???
+			
 			// Ukoliko je tip naredbe repeat, operacija malloc se ponavlja zadat broj puta
 			if (naredba.tip == "repeat") 
 			{
 				for (int i = 0; i < naredba.ponavljanja; ++i)
 					izvrsi_malloc(naredba.kolicina_memorije);
 			} 
-			// U suprotnom, jednom se izvrši
+			// U suprotnom, jednom se izvrši malloc.
 			else 
 			{
 				izvrsi_malloc(naredba.kolicina_memorije);           
@@ -127,8 +131,9 @@ class Program
 			while (zahtevi.empty() && !zavrsen)    
 				virtuelna.wait(l);
 			
-			// Procesor se prepušta nekoj od spremnih niti. Ovo se radi da uslovna promenljiva ne bi ostala u čekanju
-			// zato što bi to blokiralo uništavanje objekta i onemogućilo program da se završi
+			// Procesor se prepušta nekoj od spremnih niti
+			// Ovo se radi da uslovna promenljiva ne bi ostala u čekanju
+			// Zato što bi to blokiralo uništavanje objekta i onemogućilo program da se završi
 			while (zavrsen) 
 				this_thread::yield();
 			
