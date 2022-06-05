@@ -48,6 +48,7 @@ void testirajSve()
 	Radna_memorija rm(d, BROJ_OKVIRA);
 
 	thread procesi[UKUPNO_PROCESA];
+	
 	for (int i = 0; i < UKUPNO_PROCESA; ++i)
 		procesi[i] = thread(proces, ref(rm), i + 1, rand() % BROJ_OKVIRA + 1);
 
